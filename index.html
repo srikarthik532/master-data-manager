@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Master Data Manager — Demo</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+<style>
+:root {
+    --app-primary: #1a3a5c;
+    --app-primary-lt: #2256a0;
+}
+body { background: #f4f6f9; font-size: .875rem; }
+
+/* Navbar */
+.navbar-app {
+    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-lt) 100%);
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+.navbar-app .navbar-brand { font-size: 1.05rem; letter-spacing: .3px; }
+
+/* Demo banner */
+.demo-banner {
+    background: #fff3cd; border-bottom: 1px solid #ffc107;
+    font-size: .8rem; padding: 6px 16px; color: #664d03;
+}
+
+/* Card wrapper */
+.table-wrapper {
+    background: #fff; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.10); overflow: hidden;
+}
+
+/* Data table */
+.table-app thead th {
+    background: var(--app-primary); color: #fff;
+    font-size: .75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .4px; white-space: nowrap; border: none;
+}
+.table-app tbody tr:hover { background: #f0f5ff; }
+.table-app td { font-size: .82rem; vertical-align: middle; }
+.row-inactive { opacity: .5; }
+.btn-action { padding: 2px 7px; font-size: .76rem; }
+
+/* Modal header */
+.modal-header-app {
+    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-lt) 100%);
+    color: #fff;
+}
+.field-label { font-size: .76rem; font-weight: 600; color: #495057; margin-bottom: 3px; }
+.field-hint  { font-size: .7rem; color: #6c757d; margin-top: 2px; }
+.form-control[readonly] { background: #f8f9fa; color: #6c757d; font-style: italic; }
+
+/* Misc */
+.cell-null  { color: #adb5bd; font-style: italic; font-size: .74rem; }
+.empty-state, .loading-state {
+    background: #fff; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 60px 20px;
+}
+.fs-empty { font-size: 3.5rem; }
+.page-size-select { width: auto; min-width: 110px; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ═══════════════════════════════════════════════════════════════ -->
+<nav class="navbar navbar-dark navbar-app">
+  <div class="container-fluid">
+    <span class="navbar-brand fw-bold">
+      <i class="bi bi-database-fill-gear me-2"></i>Master Data Manager
+    </span>
+    <span id="connectionStatus" class="badge bg-success" style="font-size:.72rem">
+      <i class="bi bi-circle-fill me-1 small"></i>5 tables loaded
+    </span>
+  </div>
+</nav>
+
+<!-- Demo notice -->
+<div class="demo-banner">
+  <i class="bi bi-info-circle-fill me-1"></i>
+  <strong>Demo mode</strong> — data is stored in memory only. Changes are lost on refresh.
+  Tables: <strong>Currency, Country, ProductCategory, PaymentMethod, TaxRate</strong>
+</div>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════════════════════ -->
+<div class="container-fluid px-4 mt-3">
+
+  <!-- Toolbar -->
+  <div class="row g-2 mb-3 align-items-end">
+
+    <div class="col-md-3">
+      <label class="form-label small text-muted mb-1">Select Table</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-table"></i></span>
+        <select id="tableSelect" class="form-select" onchange="app.onTableChange()">
+          <option value="">-- Select a Table --</option>
+          <option>Currency</option>
+          <option>Country</option>
+          <option>ProductCategory</option>
+          <option>PaymentMethod</option>
+          <option>TaxRate</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label small text-muted mb-1">Search</label>
+      <div class="input-group">
+        <input type="text" id="searchInput" class="form-control"
+               placeholder="Search text fields…" disabled />
+        <button class="btn btn-outline-secondary" id="searchBtn"
+                onclick="app.search()" disabled>
+          <i class="bi bi-search"></i>
+        </button>
+        <button class="btn btn-outline-secondary" id="clearSearchBtn"
+                onclick="app.clearSearch()" disabled>
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label small text-muted mb-1 d-block">&nbsp;</label>
+      <div id="inactiveToggleWrapper" class="form-check form-switch pt-2" style="display:none">
+        <input class="form-check-input" type="checkbox" id="showInactive"
+               onchange="app.onShowInactiveChange()" />
+        <label class="form-check-label small" for="showInactive">Show Inactive</label>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-end">
+      <label class="form-label small text-muted mb-1 d-block">&nbsp;</label>
+      <button id="addBtn" class="btn btn-primary" onclick="app.openAddModal()" disabled>
+        <i class="bi bi-plus-circle me-1"></i>Add Record
+      </button>
+      <button id="refreshBtn" class="btn btn-outline-secondary ms-2"
+              onclick="app.loadRecords()" disabled title="Refresh">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Records area -->
+  <div id="tableContainer">
+    <div class="empty-state text-center py-5 text-muted">
+      <i class="bi bi-database fs-empty d-block mb-3"></i>
+      <p class="mb-0">Select a table above to view and manage records</p>
+    </div>
+  </div>
+
+  <!-- Pagination bar -->
+  <div id="paginationBar" class="d-flex justify-content-between align-items-center mt-3 pb-4"
+       style="display:none">
+    <span id="recordCount" class="text-muted small"></span>
+    <nav><ul id="pagination" class="pagination pagination-sm mb-0"></ul></nav>
+    <select id="pageSizeSelect" class="form-select form-select-sm page-size-select"
+            onchange="app.onPageSizeChange()">
+      <option value="10">10 / page</option>
+      <option value="20" selected>20 / page</option>
+      <option value="50">50 / page</option>
+    </select>
+  </div>
+
+</div>
+
+<!-- ══ ADD / EDIT MODAL ══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="recordModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header modal-header-app">
+        <h5 class="modal-title" id="modalTitle">Add Record</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="recordForm" novalidate>
+          <div id="formFields" class="row g-3"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x me-1"></i>Cancel
+        </button>
+        <button type="button" class="btn btn-primary" id="saveBtn" onclick="app.saveRecord()">
+          <i class="bi bi-check-circle me-1"></i>Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DEACTIVATE MODAL ═══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h6 class="modal-title fw-bold">
+          <i class="bi bi-exclamation-triangle-fill me-1"></i>Confirm Deactivate
+        </h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body small">
+        <p class="mb-0">
+          This will set <strong>Active = false</strong> on the selected record.
+          It stays in the database and can be reactivated by editing it.
+        </p>
+      </div>
+      <div class="modal-footer py-2">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-warning btn-sm fw-bold" id="confirmDeleteBtn">
+          <i class="bi bi-slash-circle me-1"></i>Deactivate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══════════════════════════════════════════════════════════════════ -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="toast" class="toast align-items-center text-white border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body fw-semibold" id="toastMessage"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════════════════════════════════
+//  DEMO IN-MEMORY DATABASE
+//  Simulates the SQL Server backend.  Each table entry has:
+//    columns[] — mirrors INFORMATION_SCHEMA column metadata
+//    records[] — the actual rows (plain objects)
+//    nextId    — auto-increment counter
+// ════════════════════════════════════════════════════════════════════════════
+
+const AUTO_CREATED = ['createddate','createdon','createdtime','datecreated'];
+const AUTO_UPDATED = ['updateddate','updatedon','modifieddate','modifiedon'];
+
+// Helper: col definition shorthand
+const col = (columnName, dataType, isNullable = true, maxLength = null) =>
+    ({ columnName, dataType, isIdentity: false, isNullable, maxLength });
+const pk  = (columnName = 'ID') =>
+    ({ columnName, dataType: 'int', isIdentity: true, isNullable: false, maxLength: null });
+const dt  = (columnName, isNullable = true) =>
+    ({ columnName, dataType: 'datetime', isIdentity: false, isNullable, maxLength: null });
+const bit = (columnName, isNullable = false) =>
+    ({ columnName, dataType: 'bit', isIdentity: false, isNullable, maxLength: null });
+
+const DEMO_DB = {
+
+    tables: {
+
+        // ── Currency ───────────────────────────────────────────────────────
+        Currency: {
+            nextId: 11,
+            columns: [
+                pk(),
+                col('Code',        'varchar',  false, 3),
+                col('Value',       'nvarchar', false, 100),
+                col('Description', 'nvarchar', true,  500),
+                bit('Active',      false),
+                dt('CreatedDate',  false),
+                dt('UpdatedDate',  true),
+            ],
+            records: [
+                { ID:1,  Code:'USD', Value:'US Dollar',            Description:'United States Dollar — global reserve currency', Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:2,  Code:'EUR', Value:'Euro',                 Description:'European Union common currency',                  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:3,  Code:'GBP', Value:'British Pound',        Description:'United Kingdom pound sterling',                   Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:4,  Code:'AUD', Value:'Australian Dollar',    Description:'Australia and Oceania',                           Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:5,  Code:'CAD', Value:'Canadian Dollar',      Description:'Canada official currency',                        Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:6,  Code:'JPY', Value:'Japanese Yen',         Description:'Japan official currency',                         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:7,  Code:'SGD', Value:'Singapore Dollar',     Description:'Singapore official currency',                     Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:8,  Code:'CHF', Value:'Swiss Franc',          Description:'Switzerland official currency',                   Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:9,  Code:'MYR', Value:'Malaysian Ringgit',    Description:'Malaysia official currency',                      Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:10, Code:'BTC', Value:'Bitcoin',              Description:'Digital cryptocurrency — legacy, no longer used', Active:false, CreatedDate:'2024-01-03T08:00:00', UpdatedDate:'2024-06-01T10:00:00' },
+            ]
+        },
+
+        // ── Country ────────────────────────────────────────────────────────
+        Country: {
+            nextId: 13,
+            columns: [
+                pk(),
+                col('Code',        'varchar',  false, 3),
+                col('Value',       'nvarchar', false, 100),
+                col('Description', 'nvarchar', true,  500),
+                col('RegionCode',  'varchar',  true,  10),
+                col('CapitalCity', 'nvarchar', true,  100),
+                bit('Active',      false),
+                dt('CreatedDate',  false),
+                dt('UpdatedDate',  true),
+            ],
+            records: [
+                { ID:1,  Code:'USA', Value:'United States',   Description:'United States of America',              RegionCode:'AMER', CapitalCity:'Washington D.C.', Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:2,  Code:'GBR', Value:'United Kingdom',  Description:'Great Britain and Northern Ireland',     RegionCode:'EMEA', CapitalCity:'London',          Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:3,  Code:'AUS', Value:'Australia',       Description:'Commonwealth of Australia',              RegionCode:'APAC', CapitalCity:'Canberra',         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:4,  Code:'DEU', Value:'Germany',         Description:'Federal Republic of Germany',            RegionCode:'EMEA', CapitalCity:'Berlin',           Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:5,  Code:'JPN', Value:'Japan',           Description:'Island nation in East Asia',             RegionCode:'APAC', CapitalCity:'Tokyo',            Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:6,  Code:'CAN', Value:'Canada',          Description:'Second largest country by area',         RegionCode:'AMER', CapitalCity:'Ottawa',           Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:7,  Code:'SGP', Value:'Singapore',       Description:'City-state in Southeast Asia',           RegionCode:'APAC', CapitalCity:'Singapore',        Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:8,  Code:'MYS', Value:'Malaysia',        Description:'Southeast Asian nation',                 RegionCode:'APAC', CapitalCity:'Kuala Lumpur',     Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:9,  Code:'FRA', Value:'France',          Description:'Western European nation',                RegionCode:'EMEA', CapitalCity:'Paris',            Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:10, Code:'IND', Value:'India',           Description:'South Asian republic',                   RegionCode:'APAC', CapitalCity:'New Delhi',        Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:11, Code:'CHN', Value:'China',           Description:"People's Republic of China",             RegionCode:'APAC', CapitalCity:'Beijing',          Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:12, Code:'YUG', Value:'Yugoslavia',      Description:'Former Balkan federation — dissolved 1992', RegionCode:'EMEA', CapitalCity:'Belgrade',     Active:false, CreatedDate:'2024-01-03T08:00:00', UpdatedDate:'2024-03-15T09:00:00' },
+            ]
+        },
+
+        // ── ProductCategory ────────────────────────────────────────────────
+        ProductCategory: {
+            nextId: 9,
+            columns: [
+                pk(),
+                col('Value',       'nvarchar', false, 100),
+                col('Description', 'nvarchar', true,  500),
+                col('SortOrder',   'int',       true),
+                bit('Active',      false),
+                dt('CreatedDate',  false),
+                dt('UpdatedDate',  true),
+            ],
+            records: [
+                { ID:1, Value:'Electronics',      Description:'Electronic devices and accessories',             SortOrder:1,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:2, Value:'Clothing & Apparel',Description:'Fashion, clothing and footwear',                SortOrder:2,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:3, Value:'Food & Beverages', Description:'Consumable food products and drinks',            SortOrder:3,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:4, Value:'Home & Garden',    Description:'Household items, furniture and gardening',       SortOrder:4,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:5, Value:'Sports & Outdoors',Description:'Sporting goods, fitness and outdoor equipment',  SortOrder:5,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:6, Value:'Books & Media',    Description:'Books, movies, music and digital media',         SortOrder:6,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:7, Value:'Health & Beauty',  Description:'Personal care, health and beauty products',      SortOrder:7,  Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null },
+                { ID:8, Value:'Toys & Games',     Description:'Legacy — merged into Electronics in 2024',       SortOrder:99, Active:false, CreatedDate:'2024-01-02T08:00:00', UpdatedDate:'2024-09-01T10:00:00' },
+            ]
+        },
+
+        // ── PaymentMethod ──────────────────────────────────────────────────
+        PaymentMethod: {
+            nextId: 7,
+            columns: [
+                pk(),
+                col('Code',                 'varchar',  false, 20),
+                col('Value',                'nvarchar', false, 100),
+                col('Description',          'nvarchar', true,  500),
+                bit('IsOnline',             false),
+                col('ProcessingFeePercent', 'decimal',  true),
+                bit('Active',               false),
+                dt('CreatedDate',           false),
+                dt('UpdatedDate',           true),
+            ],
+            records: [
+                { ID:1, Code:'CC',   Value:'Credit Card',    Description:'Visa, Mastercard, Amex accepted',     IsOnline:true,  ProcessingFeePercent:2.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:2, Code:'DC',   Value:'Debit Card',     Description:'Direct bank debit card',              IsOnline:true,  ProcessingFeePercent:1.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:3, Code:'PP',   Value:'PayPal',         Description:'Online PayPal payments',              IsOnline:true,  ProcessingFeePercent:3.0, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:4, Code:'BT',   Value:'Bank Transfer',  Description:'Direct bank wire transfer',           IsOnline:false, ProcessingFeePercent:0.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:5, Code:'CASH', Value:'Cash',           Description:'In-person cash payment',              IsOnline:false, ProcessingFeePercent:0.0, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:6, Code:'CHEQ', Value:'Cheque',         Description:'Bank cheque — being phased out',      IsOnline:false, ProcessingFeePercent:1.0, Active:false, CreatedDate:'2024-01-02T08:00:00', UpdatedDate:'2024-11-01T09:00:00' },
+            ]
+        },
+
+        // ── TaxRate ────────────────────────────────────────────────────────
+        TaxRate: {
+            nextId: 6,
+            columns: [
+                pk(),
+                col('Value',         'nvarchar', false, 100),
+                col('Description',   'nvarchar', true,  500),
+                col('Rate',          'decimal',  false),
+                col('EffectiveDate', 'date',     false),
+                col('ExpiryDate',    'date',     true),
+                bit('Active',        false),
+                dt('CreatedDate',    false),
+                dt('UpdatedDate',    true),
+            ],
+            records: [
+                { ID:1, Value:'Standard Rate',    Description:'Standard goods and services tax rate',         Rate:10.0, EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:2, Value:'Reduced Rate',     Description:'Reduced rate for essential goods',             Rate:5.0,  EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:3, Value:'Zero Rated',       Description:'Zero-rated exports and basic food items',      Rate:0.0,  EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:4, Value:'Luxury Rate',      Description:'Applied to luxury and discretionary items',    Rate:15.0, EffectiveDate:'2022-07-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null },
+                { ID:5, Value:'Pre-2020 Standard',Description:'Historical standard rate before 2020 reform',  Rate:7.0,  EffectiveDate:'2015-01-01', ExpiryDate:'2019-12-31', Active:false, CreatedDate:'2024-01-01T08:00:00', UpdatedDate:'2020-01-01T00:00:00' },
+            ]
+        }
+    },
+
+    // ── Operations (mirror the C# DatabaseService) ─────────────────────────
+
+    getTables() {
+        return Object.keys(this.tables);
+    },
+
+    getColumns(tableName) {
+        return (this.tables[tableName]?.columns ?? []);
+    },
+
+    getRecords(tableName, page, pageSize, search, showInactive) {
+        const tbl = this.tables[tableName];
+        let rows   = tbl.records.map(r => ({ ...r }));   // shallow copy each row
+
+        if (!showInactive)
+            rows = rows.filter(r => r.Active !== false && r.Active !== 0);
+
+        if (search) {
+            const q       = search.toLowerCase();
+            const textCols = tbl.columns
+                .filter(c => c.dataType.includes('char') || c.dataType.includes('text'))
+                .map(c => c.columnName);
+            rows = rows.filter(r =>
+                textCols.some(c => r[c] != null && String(r[c]).toLowerCase().includes(q)));
+        }
+
+        const totalCount = rows.length;
+        const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+        const offset     = (page - 1) * pageSize;
+        return { data: rows.slice(offset, offset + pageSize), totalCount, totalPages, page, pageSize };
+    },
+
+    getRecordById(tableName, idColumn, id) {
+        const r = this.tables[tableName].records.find(r => String(r[idColumn]) === String(id));
+        return r ? { ...r } : null;
+    },
+
+    insertRecord(tableName, fields) {
+        const tbl   = this.tables[tableName];
+        const idCol = tbl.columns.find(c => c.isIdentity)?.columnName ?? 'ID';
+        const now   = new Date().toISOString();
+        const newRow = { [idCol]: tbl.nextId++ };
+
+        tbl.columns.forEach(c => {
+            if (c.isIdentity) return;
+            const lower = c.columnName.toLowerCase();
+            if (AUTO_CREATED.includes(lower)) { newRow[c.columnName] = now; return; }
+            if (AUTO_UPDATED.includes(lower)) { newRow[c.columnName] = null; return; }
+            if (c.columnName === 'Active' && fields[c.columnName] === undefined) {
+                newRow[c.columnName] = true; return;
+            }
+            newRow[c.columnName] = fields[c.columnName] !== undefined ? fields[c.columnName] : null;
+        });
+
+        tbl.records.push(newRow);
+        return newRow[idCol];
+    },
+
+    updateRecord(tableName, idColumn, id, fields) {
+        const tbl = this.tables[tableName];
+        const row = tbl.records.find(r => String(r[idColumn]) === String(id));
+        if (!row) return false;
+        const now = new Date().toISOString();
+
+        tbl.columns.forEach(c => {
+            if (c.isIdentity) return;
+            if (c.columnName === idColumn) return;
+            const lower = c.columnName.toLowerCase();
+            if (AUTO_CREATED.includes(lower)) return;
+            if (AUTO_UPDATED.includes(lower)) { row[c.columnName] = now; return; }
+            if (fields[c.columnName] !== undefined) row[c.columnName] = fields[c.columnName];
+        });
+        return true;
+    },
+
+    softDelete(tableName, idColumn, id) {
+        const tbl = this.tables[tableName];
+        const row = tbl.records.find(r => String(r[idColumn]) === String(id));
+        if (!row) return false;
+        row.Active = false;
+        const now = new Date().toISOString();
+        tbl.columns.forEach(c => {
+            if (AUTO_UPDATED.includes(c.columnName.toLowerCase())) row[c.columnName] = now;
+        });
+        return true;
+    }
+};
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  APP  (same structure as the production app.js;
+//        only the apiGet/Post/Put/Delete methods differ — they call DEMO_DB
+//        instead of fetch(), so the rest of the UI logic is identical)
+// ════════════════════════════════════════════════════════════════════════════
+
+const app = {
+    currentTable:   null,
+    currentColumns: [],
+    currentPage:    1,
+    pageSize:       20,
+    totalPages:     0,
+    totalCount:     0,
+    editMode:       false,
+    editId:         null,
+    editIdColumn:   null,
+
+    async init() {
+        document.getElementById('searchInput')
+            .addEventListener('keypress', e => { if (e.key === 'Enter') this.search(); });
+    },
+
+    async onTableChange() {
+        this.currentTable = document.getElementById('tableSelect').value || null;
+        this.currentPage  = 1;
+        document.getElementById('searchInput').value = '';
+
+        const on = !!this.currentTable;
+        ['addBtn','refreshBtn','searchBtn','clearSearchBtn'].forEach(id =>
+            document.getElementById(id).disabled = !on);
+        document.getElementById('searchInput').disabled = !on;
+
+        if (!on) { this.showEmptyState(); this.hidePagBar(); return; }
+
+        this.showLoading();
+        this.currentColumns = DEMO_DB.getColumns(this.currentTable);
+
+        const hasActive = this.currentColumns.some(c => c.columnName.toLowerCase() === 'active');
+        const tw = document.getElementById('inactiveToggleWrapper');
+        tw.style.display = hasActive ? '' : 'none';
+        document.getElementById('showInactive').checked = false;
+
+        await this.loadRecords();
+    },
+
+    async loadRecords() {
+        if (!this.currentTable) return;
+        const search      = document.getElementById('searchInput').value.trim();
+        const showInactive = document.getElementById('showInactive').checked;
+
+        this.showLoading();
+        const result = await this.apiGet(
+            `/records/${enc(this.currentTable)}?page=${this.currentPage}&pageSize=${this.pageSize}`
+            + (search       ? `&search=${enc(search)}`  : '')
+            + (showInactive ? `&showInactive=true`       : '')
+        );
+        this.totalCount = result.totalCount;
+        this.totalPages = result.totalPages;
+        this.renderTable(result.data);
+        this.renderPagBar();
+    },
+
+    renderTable(records) {
+        const c = document.getElementById('tableContainer');
+        if (!records || records.length === 0) {
+            c.innerHTML = `<div class="empty-state text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-empty d-block mb-3"></i>
+                <p class="mb-0">No records found</p></div>`;
+            this.hidePagBar(); return;
+        }
+
+        const idCol = this.currentColumns.find(x => x.isIdentity)?.columnName
+                   || this.currentColumns.find(x => x.columnName.toLowerCase() === 'id')?.columnName
+                   || this.currentColumns[0].columnName;
+        const cols = this.currentColumns.map(x => x.columnName);
+
+        let html = `<div class="table-wrapper"><div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm mb-0 table-app">
+            <thead><tr>
+            ${cols.map(c => `<th>${this.fmtHdr(c)}</th>`).join('')}
+            <th class="text-center" style="width:100px">Actions</th>
+            </tr></thead><tbody>`;
+
+        records.forEach(row => {
+            const idVal    = row[idCol];
+            const rawActive = row['Active'] ?? row['active'];
+            const isActive  = rawActive === null || rawActive === undefined
+                ? true : rawActive !== false && rawActive !== 0;
+
+            html += `<tr class="${isActive ? '' : 'row-inactive'}">`;
+            cols.forEach(col => { html += `<td>${this.fmtCell(row[col], col)}</td>`; });
+            html += `<td class="text-center text-nowrap">
+                <button class="btn btn-sm btn-outline-primary btn-action me-1"
+                    onclick="app.openEditModal('${escJs(String(idVal))}','${escJs(idCol)}')"
+                    title="Edit"><i class="bi bi-pencil-fill"></i></button>
+                <button class="btn btn-sm btn-outline-warning btn-action"
+                    onclick="app.confirmDelete('${escJs(String(idVal))}','${escJs(idCol)}')"
+                    title="Deactivate" ${!isActive ? 'disabled' : ''}>
+                    <i class="bi bi-slash-circle-fill"></i></button>
+            </td></tr>`;
+        });
+
+        html += `</tbody></table></div></div>`;
+        c.innerHTML = html;
+        this.showPagBar();
+    },
+
+    fmtHdr(name) {
+        return name.replace(/([A-Z])/g,' $1').replace(/_/g,' ').trim();
+    },
+
+    fmtCell(val, colName) {
+        if (val === null || val === undefined)
+            return '<span class="cell-null">—</span>';
+        const col   = this.currentColumns.find(c => c.columnName === colName);
+        const dtype = (col?.dataType || '').toLowerCase();
+        const lower = colName.toLowerCase();
+
+        if (dtype === 'bit' || lower === 'active' || lower === 'isonline') {
+            const on = val === true || val === 1;
+            if (lower === 'active')
+                return on ? '<span class="badge bg-success">Active</span>'
+                          : '<span class="badge bg-secondary">Inactive</span>';
+            return on ? '<span class="badge bg-primary">Yes</span>'
+                      : '<span class="badge bg-light text-dark border">No</span>';
+        }
+        if (dtype.includes('datetime') || (dtype === 'date') || lower.includes('date')) {
+            const d = new Date(val);
+            if (!isNaN(d.getTime()))
+                return `<span class="text-nowrap">${dtype === 'date'
+                    ? d.toLocaleDateString() : d.toLocaleString()}</span>`;
+        }
+        const str = String(val);
+        if (str.length > 60)
+            return `<span title="${escHtml(str)}">${escHtml(str.slice(0,60))}…</span>`;
+        return escHtml(str);
+    },
+
+    // ── Pagination ──────────────────────────────────────────────────────────
+    renderPagBar() {
+        const start = (this.currentPage - 1) * this.pageSize + 1;
+        const end   = Math.min(this.currentPage * this.pageSize, this.totalCount);
+        document.getElementById('recordCount').textContent =
+            `Showing ${start}–${end} of ${this.totalCount} record${this.totalCount !== 1 ? 's' : ''}`;
+
+        const ul = document.getElementById('pagination');
+        ul.innerHTML = '';
+        const add = (label, page, disabled, active = false) => {
+            const li = document.createElement('li');
+            li.className = `page-item ${disabled?'disabled':''} ${active?'active':''}`;
+            li.innerHTML = `<a class="page-link" href="#"
+                onclick="app.goToPage(${page});return false;">${label}</a>`;
+            ul.appendChild(li);
+        };
+        add('«', 1, this.currentPage === 1);
+        add('‹', this.currentPage - 1, this.currentPage === 1);
+        let lo = Math.max(1, this.currentPage - 2);
+        let hi = Math.min(this.totalPages, lo + 4);
+        if (hi - lo < 4) lo = Math.max(1, hi - 4);
+        for (let p = lo; p <= hi; p++) add(p, p, false, p === this.currentPage);
+        add('›', this.currentPage + 1, this.currentPage === this.totalPages);
+        add('»', this.totalPages,       this.currentPage === this.totalPages);
+        this.showPagBar();
+    },
+
+    goToPage(p) {
+        if (p < 1 || p > this.totalPages) return;
+        this.currentPage = p; this.loadRecords();
+    },
+    onPageSizeChange() {
+        this.pageSize = parseInt(document.getElementById('pageSizeSelect').value, 10);
+        this.currentPage = 1; this.loadRecords();
+    },
+    onShowInactiveChange() { this.currentPage = 1; this.loadRecords(); },
+    showPagBar() { document.getElementById('paginationBar').style.display = ''; },
+    hidePagBar() { document.getElementById('paginationBar').style.display = 'none'; },
+
+    // ── Add modal ───────────────────────────────────────────────────────────
+    openAddModal() {
+        this.editMode = false; this.editId = null;
+        document.getElementById('modalTitle').textContent = `Add Record — ${this.currentTable}`;
+        this.renderFormFields(null);
+        new bootstrap.Modal(document.getElementById('recordModal')).show();
+    },
+
+    // ── Edit modal ──────────────────────────────────────────────────────────
+    async openEditModal(id, idColumn) {
+        this.editMode = true; this.editId = id; this.editIdColumn = idColumn;
+        document.getElementById('modalTitle').textContent = `Edit Record — ${this.currentTable}`;
+        const record = await this.apiGet(
+            `/records/${enc(this.currentTable)}/${enc(idColumn)}/${enc(id)}/single`);
+        this.renderFormFields(record);
+        new bootstrap.Modal(document.getElementById('recordModal')).show();
+    },
+
+    // ── Build form fields ───────────────────────────────────────────────────
+    renderFormFields(record) {
+        const container = document.getElementById('formFields');
+        container.innerHTML = '';
+
+        this.currentColumns.forEach(col => {
+            const lower      = col.columnName.toLowerCase();
+            const isAutoC    = AUTO_CREATED.includes(lower);
+            const isAutoU    = AUTO_UPDATED.includes(lower);
+            const isReadOnly = col.isIdentity || isAutoC || isAutoU;
+            const value      = record ? record[col.columnName] : null;
+
+            const div = document.createElement('div');
+            div.className = col.dataType === 'bit'          ? 'col-md-4'
+                          : col.dataType.includes('text')   ? 'col-12'
+                          : 'col-md-6';
+
+            const req   = !col.isNullable && !isReadOnly;
+            const label = `<label class="field-label d-block" for="field_${col.columnName}">
+                ${this.fmtHdr(col.columnName)}
+                ${req ? '<span class="text-danger ms-1">*</span>' : ''}
+            </label>`;
+
+            let input = '', hint = '';
+
+            if (isReadOnly) {
+                let disp = '(auto)';
+                if (value !== null && value !== undefined) {
+                    if ((col.dataType.includes('datetime') || col.dataType === 'date') && !isNaN(new Date(value).getTime()))
+                        disp = new Date(value).toLocaleString();
+                    else disp = String(value);
+                } else if (!col.isIdentity) disp = '(auto-set on save)';
+                input = `<input type="text" class="form-control form-control-sm"
+                    id="field_${col.columnName}" value="${escHtml(disp)}" readonly>`;
+                hint  = col.isIdentity ? '(auto-generated)'
+                      : isAutoC        ? '(set on create)'
+                      :                  '(set on update)';
+
+            } else if (col.dataType === 'bit') {
+                const chk = (value === true || value === 1 || value === null) ? 'checked' : '';
+                input = `<div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox"
+                        id="field_${col.columnName}" ${chk}>
+                    <label class="form-check-label small" for="field_${col.columnName}">
+                        ${chk ? 'Yes / Active' : 'No / Inactive'}
+                    </label></div>`;
+                div.addEventListener('change', e => {
+                    const lbl = div.querySelector('.form-check-label');
+                    if (lbl) lbl.textContent = e.target.checked ? 'Yes / Active' : 'No / Inactive';
+                });
+
+            } else if (col.dataType.includes('datetime') || col.dataType === 'date') {
+                const type = col.dataType === 'date' ? 'date' : 'datetime-local';
+                const fmt  = this.fmtDateInput(value, col.dataType === 'date');
+                input = `<input type="${type}" class="form-control form-control-sm"
+                    id="field_${col.columnName}" value="${fmt}">`;
+
+            } else if (['int','bigint','smallint','tinyint'].includes(col.dataType)) {
+                input = `<input type="number" step="1" class="form-control form-control-sm"
+                    id="field_${col.columnName}" value="${value ?? ''}">`;
+
+            } else if (['decimal','numeric','float','real','money'].includes(col.dataType)) {
+                input = `<input type="number" step="any" class="form-control form-control-sm"
+                    id="field_${col.columnName}" value="${value ?? ''}">`;
+
+            } else if (col.dataType.includes('text')) {
+                input = `<textarea class="form-control form-control-sm"
+                    id="field_${col.columnName}" rows="3">${escHtml(value ?? '')}</textarea>`;
+
+            } else {
+                const ml = col.maxLength && col.maxLength > 0 ? `maxlength="${col.maxLength}"` : '';
+                input = `<input type="text" class="form-control form-control-sm"
+                    id="field_${col.columnName}"
+                    value="${escHtml(String(value ?? ''))}" ${ml}>`;
+            }
+
+            div.innerHTML = label + input + (hint ? `<div class="field-hint">${hint}</div>` : '');
+            container.appendChild(div);
+        });
+    },
+
+    fmtDateInput(val, dateOnly) {
+        if (!val) return '';
+        const d = new Date(val);
+        if (isNaN(d.getTime())) return '';
+        return dateOnly ? d.toISOString().split('T')[0] : d.toISOString().slice(0, 16);
+    },
+
+    // ── Save ────────────────────────────────────────────────────────────────
+    async saveRecord() {
+        const fields = {};
+        this.currentColumns.forEach(col => {
+            const lower = col.columnName.toLowerCase();
+            if (col.isIdentity || AUTO_CREATED.includes(lower) || AUTO_UPDATED.includes(lower)) return;
+            const el = document.getElementById(`field_${col.columnName}`);
+            if (!el) return;
+            if (col.dataType === 'bit')
+                fields[col.columnName] = el.checked;
+            else if (['int','bigint','smallint','tinyint'].includes(col.dataType))
+                fields[col.columnName] = el.value !== '' ? parseInt(el.value, 10) : null;
+            else if (['decimal','numeric','float','real','money'].includes(col.dataType))
+                fields[col.columnName] = el.value !== '' ? parseFloat(el.value) : null;
+            else
+                fields[col.columnName] = el.value !== '' ? el.value : null;
+        });
+
+        const btn = document.getElementById('saveBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Saving…';
+
+        try {
+            if (this.editMode) {
+                await this.apiPut(
+                    `/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`,
+                    fields);
+                this.showToast('Record updated successfully.', 'success');
+            } else {
+                await this.apiPost(`/records/${enc(this.currentTable)}`, fields);
+                this.showToast('Record created successfully.', 'success');
+            }
+            bootstrap.Modal.getInstance(document.getElementById('recordModal')).hide();
+            await this.loadRecords();
+        } catch (err) {
+            this.showToast('Save failed: ' + err.message, 'danger');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Save';
+        }
+    },
+
+    // ── Soft delete ─────────────────────────────────────────────────────────
+    confirmDelete(id, idColumn) {
+        this.editId = id; this.editIdColumn = idColumn;
+        const m = new bootstrap.Modal(document.getElementById('deleteModal'));
+        document.getElementById('confirmDeleteBtn').onclick = () => { m.hide(); this.softDelete(); };
+        m.show();
+    },
+
+    async softDelete() {
+        try {
+            await this.apiDelete(
+                `/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`);
+            this.showToast('Record deactivated.', 'warning');
+            await this.loadRecords();
+        } catch (err) {
+            this.showToast('Deactivate failed: ' + err.message, 'danger');
+        }
+    },
+
+    // ── Search ──────────────────────────────────────────────────────────────
+    search()      { this.currentPage = 1; this.loadRecords(); },
+    clearSearch() { document.getElementById('searchInput').value = ''; this.currentPage = 1; this.loadRecords(); },
+
+    // ── UI helpers ───────────────────────────────────────────────────────────
+    showEmptyState() {
+        document.getElementById('tableContainer').innerHTML = `
+            <div class="empty-state text-center py-5 text-muted">
+                <i class="bi bi-database fs-empty d-block mb-3"></i>
+                <p class="mb-0">Select a table above to view and manage records</p></div>`;
+    },
+    showLoading() {
+        document.getElementById('tableContainer').innerHTML = `
+            <div class="loading-state text-center py-5">
+                <div class="spinner-border text-primary"></div>
+                <p class="mt-3 mb-0 text-muted">Loading…</p></div>`;
+    },
+    showToast(message, type = 'success') {
+        const t = document.getElementById('toast');
+        t.className = `toast align-items-center text-white border-0 bg-${type}`;
+        document.getElementById('toastMessage').textContent = message;
+        new bootstrap.Toast(t, { delay: 4000 }).show();
+    },
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  DEMO API LAYER  — routes path strings to DEMO_DB operations
+    //  In the production app these call fetch() against the ASP.NET Core API.
+    // ════════════════════════════════════════════════════════════════════════
+
+    async apiGet(path) {
+        if (path === '/tables')
+            return DEMO_DB.getTables();
+
+        const colM = path.match(/^\/columns\/(.+)$/);
+        if (colM) return DEMO_DB.getColumns(decodeURIComponent(colM[1]));
+
+        const singleM = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/?]+)\/single/);
+        if (singleM) {
+            const [,tbl,idC,id] = singleM.map(x => decodeURIComponent(x));
+            const r = DEMO_DB.getRecordById(tbl, idC, id);
+            if (!r) throw new Error('Record not found.');
+            return r;
+        }
+
+        const recM = path.match(/^\/records\/([^/?]+)/);
+        if (recM) {
+            const tbl       = decodeURIComponent(recM[1]);
+            const qs        = new URLSearchParams(path.split('?')[1] || '');
+            const page      = parseInt(qs.get('page')     || '1',  10);
+            const pageSize  = parseInt(qs.get('pageSize') || '20', 10);
+            const search    = qs.get('search')     || '';
+            const showInact = qs.get('showInactive') === 'true';
+            return DEMO_DB.getRecords(tbl, page, pageSize, search, showInact);
+        }
+        throw new Error('Unknown path: ' + path);
+    },
+
+    async apiPost(path, body) {
+        const m = path.match(/^\/records\/([^/]+)$/);
+        if (m) {
+            const tbl = decodeURIComponent(m[1]);
+            const id  = DEMO_DB.insertRecord(tbl, body);
+            return { id, message: 'Record created successfully.' };
+        }
+        throw new Error('Unknown path: ' + path);
+    },
+
+    async apiPut(path, body) {
+        const m = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/]+)$/);
+        if (m) {
+            const [,tbl,idC,id] = m.map(x => decodeURIComponent(x));
+            if (!DEMO_DB.updateRecord(tbl, idC, id, body))
+                throw new Error('Record not found.');
+            return { message: 'Record updated successfully.' };
+        }
+        throw new Error('Unknown path: ' + path);
+    },
+
+    async apiDelete(path) {
+        const m = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/]+)$/);
+        if (m) {
+            const [,tbl,idC,id] = m.map(x => decodeURIComponent(x));
+            if (!DEMO_DB.softDelete(tbl, idC, id))
+                throw new Error('Record not found.');
+            return { message: 'Record deactivated.' };
+        }
+        throw new Error('Unknown path: ' + path);
+    }
+};
+
+// ─── Utilities ───────────────────────────────────────────────────────────────
+function enc(v)    { return encodeURIComponent(v); }
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function escJs(s)  { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
+
+document.addEventListener('DOMContentLoaded', () => app.init());
+</script>
+</body>
+</html>
