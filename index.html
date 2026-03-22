@@ -7,163 +7,138 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 <style>
-:root {
-    --brand: #1a3a5c;
-    --brand-lt: #2256a0;
-}
-body { background: #f0f3f7; font-size: .875rem; }
+:root { --brand:#1a3a5c; --brand-lt:#2256a0; }
+body { background:#f0f3f7; font-size:.875rem; }
 
 /* ── Login ── */
 #loginScreen {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a3a5c 0%, #2256a0 100%);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,#1a3a5c 0%,#2256a0 100%);
 }
 .login-card {
-    background: #fff; border-radius: 14px; padding: 44px 40px 36px;
-    box-shadow: 0 12px 40px rgba(0,0,0,.22); width: 100%; max-width: 400px;
+    background:#fff; border-radius:14px; padding:44px 40px 36px;
+    box-shadow:0 12px 40px rgba(0,0,0,.22); width:100%; max-width:420px;
 }
-.login-logo { font-size: 2.8rem; color: var(--brand); text-align: center; margin-bottom: 8px; }
-.login-card h4 { text-align: center; font-weight: 700; color: #1a1a2e; }
-.login-card .subtitle { text-align: center; color: #6c757d; font-size: .83rem; margin-bottom: 24px; }
-.user-option-card {
-    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-    border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer;
-    margin-bottom: 10px; transition: all .15s;
+.login-logo { font-size:2.8rem; color:var(--brand); text-align:center; margin-bottom:8px; }
+.login-card h4 { text-align:center; font-weight:700; color:#1a1a2e; }
+.login-subtitle { text-align:center; color:#6c757d; font-size:.82rem; margin-bottom:22px; }
+.user-option {
+    display:flex; align-items:center; gap:12px; padding:11px 14px;
+    border:2px solid #e9ecef; border-radius:10px; cursor:pointer;
+    margin-bottom:9px; transition:all .15s;
 }
-.user-option-card:hover { border-color: var(--brand-lt); background: #f0f5ff; }
-.user-option-card.selected { border-color: var(--brand); background: #eef3ff; }
-.user-avatar {
-    width: 40px; height: 40px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; font-weight: 700;
-    font-size: .9rem; color: #fff; flex-shrink: 0;
+.user-option:hover  { border-color:var(--brand-lt); background:#f0f5ff; }
+.user-option.selected { border-color:var(--brand); background:#eef3ff; }
+.av {
+    width:36px; height:36px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-weight:700; font-size:.82rem; color:#fff; flex-shrink:0;
 }
-.user-option-card .user-name { font-weight: 600; font-size: .88rem; color: #212529; line-height: 1.2; }
-.user-option-card .user-role { font-size: .74rem; color: #6c757d; }
+.user-option .uname { font-weight:600; font-size:.86rem; color:#212529; line-height:1.2; }
+.user-option .urole { font-size:.72rem; color:#6c757d; }
 
 /* ── Navbar ── */
 .navbar-app {
-    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-lt) 100%);
-    box-shadow: 0 2px 8px rgba(0,0,0,.22); padding: 10px 20px;
+    background:linear-gradient(135deg,var(--brand) 0%,var(--brand-lt) 100%);
+    box-shadow:0 2px 8px rgba(0,0,0,.2); padding:10px 20px;
 }
-.navbar-app .navbar-brand { font-size: 1rem; font-weight: 700; color: #fff; }
-.curr-user-pill {
-    background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3);
-    border-radius: 20px; padding: 4px 12px; display: flex; align-items: center;
-    gap: 8px; color: #fff; font-size: .8rem;
+.navbar-app .navbar-brand { font-size:1rem; font-weight:700; color:#fff; }
+.user-pill {
+    background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3);
+    border-radius:20px; padding:4px 12px; display:flex; align-items:center;
+    gap:8px; color:#fff; font-size:.79rem;
 }
-.curr-user-pill .av {
-    width: 24px; height: 24px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; font-weight: 700; font-size: .7rem; color: #fff;
-}
+.user-pill .av { width:24px; height:24px; font-size:.68rem; }
 
 /* ── Demo banner ── */
-.demo-banner { background: #fff3cd; border-bottom: 1px solid #ffc107; font-size: .78rem; padding: 5px 16px; color: #664d03; }
+.demo-banner { background:#fff3cd; border-bottom:1px solid #ffc107; font-size:.77rem; padding:5px 16px; color:#664d03; }
 
 /* ── Tabs ── */
-.main-tabs { background: #fff; border-bottom: 2px solid #dee2e6; padding: 0 20px; }
+.main-tabs { background:#fff; border-bottom:2px solid #dee2e6; padding:0 20px; }
 .main-tabs .nav-link {
-    color: #6c757d; font-size: .84rem; font-weight: 600; padding: 12px 18px;
-    border: none; border-bottom: 3px solid transparent; border-radius: 0; margin-bottom: -2px;
+    color:#6c757d; font-size:.83rem; font-weight:600; padding:11px 18px;
+    border:none; border-bottom:3px solid transparent; border-radius:0; margin-bottom:-2px;
 }
-.main-tabs .nav-link:hover { color: var(--brand); border-bottom-color: #c5d4e8; }
-.main-tabs .nav-link.active { color: var(--brand); border-bottom-color: var(--brand); background: none; }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; }
+.main-tabs .nav-link:hover { color:var(--brand); border-bottom-color:#c5d4e8; }
+.main-tabs .nav-link.active { color:var(--brand); border-bottom-color:var(--brand); background:none; }
+.tab-pane { display:none; }
+.tab-pane.active { display:block; }
 
 /* ── Toolbar ── */
-.toolbar { background: #fff; border-bottom: 1px solid #e9ecef; padding: 12px 20px; }
+.toolbar { background:#fff; border-bottom:1px solid #e9ecef; padding:12px 20px; }
 .view-only-badge {
-    display: inline-flex; align-items: center; gap: 5px; font-size: .74rem;
-    background: #e8f4fd; color: #0c63a0; border: 1px solid #b6d9f5;
-    border-radius: 20px; padding: 2px 10px; font-weight: 600;
+    display:inline-flex; align-items:center; gap:5px; font-size:.73rem;
+    background:#e8f4fd; color:#0c63a0; border:1px solid #b6d9f5;
+    border-radius:20px; padding:2px 10px; font-weight:600;
 }
 
-/* ── Table ── */
-.table-wrapper { background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow: hidden; margin: 16px 20px 0; }
+/* ── Data table ── */
+.table-wrapper { background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; margin:16px 20px 0; }
 .table-app thead th {
-    background: var(--brand); color: #fff; font-size: .73rem;
-    font-weight: 600; text-transform: uppercase; letter-spacing: .4px;
-    white-space: nowrap; border: none; padding: 10px 12px;
+    background:var(--brand); color:#fff; font-size:.72rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:.4px; white-space:nowrap;
+    border:none; padding:10px 12px;
 }
-.table-app td { font-size: .82rem; vertical-align: middle; padding: 7px 12px; }
-.table-app tbody tr:hover { background: #f5f8ff; }
-.row-inactive { opacity: .45; }
-.btn-action { padding: 2px 8px; font-size: .75rem; }
-.cell-null { color: #ced4da; font-style: italic; }
-.modified-by { font-size: .72rem; color: #6c757d; }
+.table-app td { font-size:.81rem; vertical-align:middle; padding:7px 12px; }
+.table-app tbody tr:hover { background:#f5f8ff; }
+.row-inactive { opacity:.45; }
+.btn-action { padding:2px 8px; font-size:.74rem; }
+.cell-null { color:#ced4da; font-style:italic; }
+.modified-by { font-size:.71rem; color:#6c757d; }
 
 /* ── Modal ── */
-.modal-header-app { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-lt) 100%); color: #fff; }
-.field-label { font-size: .75rem; font-weight: 600; color: #495057; margin-bottom: 3px; }
-.field-hint  { font-size: .69rem; color: #6c757d; margin-top: 2px; }
-.form-control[readonly] { background: #f8f9fa; color: #6c757d; font-style: italic; }
+.modal-header-app { background:linear-gradient(135deg,var(--brand) 0%,var(--brand-lt) 100%); color:#fff; }
+.field-label { font-size:.75rem; font-weight:600; color:#495057; margin-bottom:3px; }
+.field-hint  { font-size:.69rem; color:#6c757d; margin-top:2px; }
+.form-control[readonly] { background:#f8f9fa; color:#6c757d; font-style:italic; }
 
 /* ── Admin tab ── */
-.perm-table thead th { font-size: .75rem; white-space: nowrap; text-align: center; }
-.perm-table .user-cell { min-width: 150px; }
-.perm-select { font-size: .78rem; padding: 3px 6px; }
-.perm-select.perm-none  { background: #f8f9fa; color: #6c757d; }
-.perm-select.perm-view  { background: #e7f3ff; color: #0c63a0; border-color: #90c3f0; }
-.perm-select.perm-edit  { background: #e8f7ee; color: #146c3d; border-color: #8dd4aa; }
-.section-title { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--brand); }
+.admin-section-title {
+    font-size:.75rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.6px; color:var(--brand); margin-bottom:4px;
+}
+.perm-select { font-size:.77rem; padding:3px 6px; }
+.perm-select.perm-none { background:#f8f9fa; color:#6c757d; }
+.perm-select.perm-view { background:#e7f3ff; color:#0c63a0; border-color:#90c3f0; }
+.perm-select.perm-edit { background:#e8f7ee; color:#146c3d; border-color:#8dd4aa; }
+.perm-table thead th { font-size:.73rem; white-space:nowrap; }
+.user-row-av { width:34px; height:34px; font-size:.78rem; border-radius:50%; }
 
 /* ── Pagination ── */
-.pag-bar { background: #fff; border-top: 1px solid #e9ecef; padding: 10px 20px; margin: 0 20px; border-radius: 0 0 8px 8px; }
+.pag-bar { background:#fff; border-top:1px solid #e9ecef; padding:10px 20px; margin:0 20px; border-radius:0 0 8px 8px; }
 
-/* ── Empty / loading ── */
-.state-box { background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 60px 20px; margin: 16px 20px 0; text-align: center; color: #adb5bd; }
-.state-icon { font-size: 3.5rem; display: block; margin-bottom: 12px; }
+/* ── State boxes ── */
+.state-box { background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,.08); padding:60px 20px; margin:16px 20px 0; text-align:center; color:#adb5bd; }
+.state-icon { font-size:3.2rem; display:block; margin-bottom:12px; }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════════ LOGIN SCREEN ═══ -->
+<!-- ══ LOGIN ═══════════════════════════════════════════════════════════════ -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo"><i class="bi bi-database-fill-gear"></i></div>
-    <h4>Master Data Manager</h4>
-    <p class="subtitle">Select your account to continue</p>
-
-    <div class="user-option-card" onclick="app.selectUser('admin')" id="opt_admin">
-      <div class="user-avatar" style="background:#1a3a5c">A</div>
-      <div><div class="user-name">Administrator</div>
-           <div class="user-role"><i class="bi bi-shield-fill-check me-1 text-warning"></i>Full access — all tables &amp; permissions</div></div>
-    </div>
-    <div class="user-option-card" onclick="app.selectUser('sarah.k')" id="opt_sarah.k">
-      <div class="user-avatar" style="background:#7c4dcd">S</div>
-      <div><div class="user-name">Sarah K</div>
-           <div class="user-role"><i class="bi bi-building me-1"></i>Marketing department</div></div>
-    </div>
-    <div class="user-option-card" onclick="app.selectUser('john.m')" id="opt_john.m">
-      <div class="user-avatar" style="background:#0088cc">J</div>
-      <div><div class="user-name">John M</div>
-           <div class="user-role"><i class="bi bi-building me-1"></i>Finance department</div></div>
-    </div>
-    <div class="user-option-card" onclick="app.selectUser('priya.r')" id="opt_priya.r">
-      <div class="user-avatar" style="background:#d4500a">P</div>
-      <div><div class="user-name">Priya R</div>
-           <div class="user-role"><i class="bi bi-building me-1"></i>Operations department</div></div>
-    </div>
-
-    <button class="btn btn-primary w-100 mt-3 py-2" id="loginBtn" onclick="app.login()" disabled>
+    <h4 class="mb-1">Master Data Manager</h4>
+    <p class="login-subtitle">Select your account to continue</p>
+    <div id="userOptionsList"></div>
+    <button class="btn btn-primary w-100 mt-2 py-2" id="loginBtn" onclick="app.login()" disabled>
       <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
     </button>
+    <p class="text-center text-muted mt-3 mb-0" style="font-size:.72rem">
+      <i class="bi bi-windows me-1"></i>Production: users will be identified automatically via Windows Authentication
+    </p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════ MAIN APP ═══ -->
+<!-- ══ MAIN APP ════════════════════════════════════════════════════════════ -->
 <div id="mainApp" style="display:none">
 
-  <!-- Navbar -->
   <nav class="navbar navbar-app d-flex justify-content-between align-items-center">
-    <span class="navbar-brand">
-      <i class="bi bi-database-fill-gear me-2"></i>Master Data Manager
-    </span>
+    <span class="navbar-brand"><i class="bi bi-database-fill-gear me-2"></i>Master Data Manager</span>
     <div class="d-flex align-items-center gap-3">
-      <div class="curr-user-pill" id="userPill">
-        <div class="av" id="userAv">A</div>
-        <span id="userPillName">Admin</span>
-        <span class="badge bg-warning text-dark ms-1" id="userRoleBadge" style="font-size:.65rem">ADMIN</span>
+      <div class="user-pill">
+        <div class="av" id="navAv">A</div>
+        <span id="navName">Admin</span>
+        <span class="badge ms-1" id="navBadge" style="font-size:.63rem">ADMIN</span>
       </div>
       <button class="btn btn-sm btn-outline-light py-1 px-3" onclick="app.logout()">
         <i class="bi bi-box-arrow-right me-1"></i>Sign Out
@@ -171,10 +146,9 @@ body { background: #f0f3f7; font-size: .875rem; }
     </div>
   </nav>
 
-  <!-- Demo notice -->
   <div class="demo-banner">
     <i class="bi bi-info-circle-fill me-1"></i>
-    <strong>Demo mode</strong> — data lives in memory only; changes reset on refresh.
+    <strong>Demo mode</strong> — data is in-memory only; changes reset on refresh.
   </div>
 
   <!-- Tabs -->
@@ -191,11 +165,9 @@ body { background: #f0f3f7; font-size: .875rem; }
     </li>
   </ul>
 
-  <!-- ── DATA TAB ──────────────────────────────────────────────────────── -->
+  <!-- ── DATA TAB ── -->
   <div id="tabData" class="tab-pane active">
-
     <div class="toolbar d-flex flex-wrap gap-2 align-items-end">
-
       <div>
         <div class="field-label mb-1">Select Table</div>
         <div class="input-group">
@@ -205,95 +177,97 @@ body { background: #f0f3f7; font-size: .875rem; }
           </select>
         </div>
       </div>
-
       <div>
         <div class="field-label mb-1">Search</div>
         <div class="input-group">
           <input type="text" id="searchInput" class="form-control" placeholder="Search text fields…" disabled style="min-width:180px" />
-          <button class="btn btn-outline-secondary" id="searchBtn" onclick="app.search()" disabled>
-            <i class="bi bi-search"></i>
-          </button>
-          <button class="btn btn-outline-secondary" id="clearSearchBtn" onclick="app.clearSearch()" disabled>
-            <i class="bi bi-x-lg"></i>
-          </button>
+          <button class="btn btn-outline-secondary" id="searchBtn" onclick="app.search()" disabled><i class="bi bi-search"></i></button>
+          <button class="btn btn-outline-secondary" id="clearSearchBtn" onclick="app.clearSearch()" disabled><i class="bi bi-x-lg"></i></button>
         </div>
       </div>
-
-      <div id="inactiveToggleWrap" style="display:none; padding-top:22px">
+      <div id="inactiveToggleWrap" style="display:none;padding-top:22px">
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" id="showInactive" onchange="app.onShowInactiveChange()" />
           <label class="form-check-label small" for="showInactive">Show Inactive</label>
         </div>
       </div>
-
       <div class="ms-auto d-flex align-items-end gap-2" style="padding-top:22px">
-        <span id="viewOnlyBadge" class="view-only-badge" style="display:none">
-          <i class="bi bi-eye-fill"></i>View Only
-        </span>
-        <button id="addBtn" class="btn btn-primary" onclick="app.openAddModal()" disabled>
-          <i class="bi bi-plus-circle me-1"></i>Add Record
-        </button>
-        <button id="refreshBtn" class="btn btn-outline-secondary" onclick="app.loadRecords()" disabled>
-          <i class="bi bi-arrow-clockwise"></i>
-        </button>
+        <span id="viewOnlyBadge" class="view-only-badge" style="display:none"><i class="bi bi-eye-fill"></i>View Only</span>
+        <button id="addBtn" class="btn btn-primary" onclick="app.openAddModal()" disabled><i class="bi bi-plus-circle me-1"></i>Add Record</button>
+        <button id="refreshBtn" class="btn btn-outline-secondary" onclick="app.loadRecords()" disabled><i class="bi bi-arrow-clockwise"></i></button>
       </div>
-
     </div>
 
     <div id="tableContainer">
-      <div class="state-box">
-        <i class="bi bi-database state-icon"></i>
-        <p class="mb-0">Select a table above to view and manage records</p>
-      </div>
+      <div class="state-box"><i class="bi bi-database state-icon"></i><p class="mb-0">Select a table above to view and manage records</p></div>
     </div>
-
     <div id="paginationBar" class="pag-bar d-flex justify-content-between align-items-center" style="display:none">
       <span id="recordCount" class="text-muted small"></span>
       <nav><ul id="pagination" class="pagination pagination-sm mb-0"></ul></nav>
-      <select id="pageSizeSelect" class="form-select form-select-sm" style="width:auto"
-              onchange="app.onPageSizeChange()">
-        <option value="10">10 / page</option>
-        <option value="20" selected>20 / page</option>
-        <option value="50">50 / page</option>
+      <select id="pageSizeSelect" class="form-select form-select-sm" style="width:auto" onchange="app.onPageSizeChange()">
+        <option value="10">10 / page</option><option value="20" selected>20 / page</option><option value="50">50 / page</option>
       </select>
     </div>
-
   </div>
 
-  <!-- ── ADMIN TAB ─────────────────────────────────────────────────────── -->
+  <!-- ── ADMIN TAB ── -->
   <div id="tabAdmin" class="tab-pane">
     <div class="p-4">
 
-      <div class="d-flex align-items-center justify-content-between mb-4">
+      <!-- ① Users section -->
+      <div class="d-flex align-items-start justify-content-between mb-3">
         <div>
-          <h5 class="mb-0 fw-bold" style="color:var(--brand)">
-            <i class="bi bi-shield-lock me-2"></i>Table Access Permissions
-          </h5>
-          <p class="text-muted small mb-0 mt-1">
-            Control which tables each user can access. Changes apply immediately.
+          <div class="admin-section-title"><i class="bi bi-people-fill me-1"></i>Authorized Users</div>
+          <p class="text-muted mb-0" style="font-size:.8rem">
+            Users listed here can sign in. In production, the Windows username is matched automatically on login.
           </p>
         </div>
-        <button class="btn btn-success px-4" onclick="app.savePermissions()">
+        <button class="btn btn-primary btn-sm px-3" onclick="app.openAddUserModal()">
+          <i class="bi bi-person-plus-fill me-1"></i>Add User
+        </button>
+      </div>
+
+      <div class="bg-white rounded shadow-sm overflow-hidden mb-4">
+        <table class="table table-sm table-hover mb-0" id="userMgmtTable">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-3" style="width:40px"></th>
+              <th>Windows Username</th>
+              <th>Display Name</th>
+              <th>Department</th>
+              <th>Role</th>
+              <th>Table Access</th>
+              <th class="text-center" style="width:80px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userMgmtBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ② Permissions section -->
+      <div class="d-flex align-items-start justify-content-between mb-3">
+        <div>
+          <div class="admin-section-title"><i class="bi bi-shield-lock me-1"></i>Table Access Permissions</div>
+          <p class="text-muted mb-0" style="font-size:.8rem">
+            Set per-user, per-table access. Click <strong>Save Permissions</strong> to apply.
+          </p>
+        </div>
+        <button class="btn btn-success btn-sm px-3" onclick="app.savePermissions()">
           <i class="bi bi-check-circle me-1"></i>Save Permissions
         </button>
       </div>
 
-      <div class="bg-white rounded shadow-sm p-0 overflow-hidden">
+      <div class="bg-white rounded shadow-sm overflow-auto mb-3">
         <table class="table table-bordered perm-table mb-0" id="permMatrix">
-          <thead class="table-light">
-            <tr>
-              <th class="user-cell py-3 ps-3" style="background:#f8f9fa">User</th>
-              <!-- table columns injected by JS -->
-            </tr>
-          </thead>
+          <thead class="table-light"><tr id="permMatrixHead"></tr></thead>
           <tbody id="permMatrixBody"></tbody>
         </table>
       </div>
 
-      <div class="mt-3 small text-muted d-flex gap-4">
-        <span><span class="badge bg-secondary me-1">No Access</span> User cannot see this table</span>
-        <span><span class="badge" style="background:#0c63a0">View Only</span> User can browse records, cannot edit</span>
-        <span><span class="badge bg-success me-1">Edit</span> User can add, edit, and deactivate records</span>
+      <div class="d-flex gap-4 small text-muted">
+        <span><span class="badge bg-secondary me-1">No Access</span>Cannot see the table</span>
+        <span><span class="badge" style="background:#0c63a0">View Only</span> Can browse, cannot edit</span>
+        <span><span class="badge bg-success me-1">Edit</span>Full add / edit / deactivate</span>
       </div>
 
     </div>
@@ -301,9 +275,9 @@ body { background: #f0f3f7; font-size: .875rem; }
 
 </div><!-- /mainApp -->
 
-<!-- ════════════════════════════════════════════════════════ MODALS ═══════ -->
+<!-- ══ MODALS ════════════════════════════════════════════════════════════ -->
 
-<!-- Add / Edit modal -->
+<!-- Record add/edit/view -->
 <div class="modal fade" id="recordModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
@@ -312,14 +286,10 @@ body { background: #f0f3f7; font-size: .875rem; }
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="recordForm" novalidate>
-          <div id="formFields" class="row g-3"></div>
-        </form>
+        <form id="recordForm" novalidate><div id="formFields" class="row g-3"></div></form>
       </div>
       <div class="modal-footer" id="modalFooter">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          <i class="bi bi-x me-1"></i>Cancel
-        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" id="saveBtn" onclick="app.saveRecord()">
           <i class="bi bi-check-circle me-1"></i>Save
         </button>
@@ -328,26 +298,80 @@ body { background: #f0f3f7; font-size: .875rem; }
   </div>
 </div>
 
-<!-- Deactivate confirm modal -->
+<!-- Deactivate confirm -->
 <div class="modal fade" id="deleteModal" tabindex="-1">
   <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-warning">
-        <h6 class="modal-title fw-bold">
-          <i class="bi bi-exclamation-triangle-fill me-1"></i>Confirm Deactivate
-        </h6>
+        <h6 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle-fill me-1"></i>Confirm Deactivate</h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body small">
-        <p class="mb-0">
-          This will set <strong>Active = false</strong> on the record.
-          It stays in the database and can be reactivated by editing it.
-        </p>
+        <p class="mb-0">Sets <strong>Active = false</strong>. Record stays in the database and can be reactivated by editing.</p>
       </div>
       <div class="modal-footer py-2">
         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-warning btn-sm fw-bold" id="confirmDeleteBtn">
           <i class="bi bi-slash-circle me-1"></i>Deactivate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add User modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px">
+    <div class="modal-content">
+      <div class="modal-header modal-header-app">
+        <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i>Add Authorized User</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="field-label">Windows Username <span class="text-danger">*</span></label>
+          <input type="text" id="newWinUser" class="form-control" placeholder="e.g. DOMAIN\jsmith  or  jsmith@company.com" />
+          <div class="field-hint">
+            <i class="bi bi-windows me-1"></i>This is the identity Windows Authentication will pass to the app on login. Must be unique.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="field-label">Display Name <span class="text-danger">*</span></label>
+          <input type="text" id="newDisplayName" class="form-control" placeholder="e.g. John Smith" />
+        </div>
+        <div class="mb-3">
+          <label class="field-label">Department</label>
+          <input type="text" id="newDept" class="form-control" placeholder="e.g. Finance" />
+          <div class="field-hint">Optional — shown in the user list and login screen</div>
+        </div>
+        <div id="addUserError" class="alert alert-danger py-2 small" style="display:none"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="app.addUser()">
+          <i class="bi bi-person-plus-fill me-1"></i>Add User
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Remove User confirm -->
+<div class="modal fade" id="removeUserModal" tabindex="-1">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h6 class="modal-title fw-bold"><i class="bi bi-person-x-fill me-1"></i>Remove User</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body small">
+        <p class="mb-1">Remove <strong id="removeUserName"></strong>?</p>
+        <p class="mb-0 text-muted">Their permissions will also be deleted. They will no longer be able to access this application.</p>
+      </div>
+      <div class="modal-footer py-2">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger btn-sm" id="confirmRemoveBtn">
+          <i class="bi bi-person-x-fill me-1"></i>Remove
         </button>
       </div>
     </div>
@@ -371,167 +395,151 @@ body { background: #f0f3f7; font-size: .875rem; }
 // ════════════════════════════════════════════════════════════════════════════
 //  CONSTANTS
 // ════════════════════════════════════════════════════════════════════════════
-
 const AUTO_CREATED    = ['createddate','createdon','datecreated'];
 const AUTO_UPDATED    = ['updateddate','updatedon','modifieddate','modifiedon'];
 const AUTO_MODIFIEDBY = ['lastmodifiedby','modifiedby','updatedby','changedby'];
-
-const USERS = [
-    { id: 'admin',   name: 'Administrator', dept: 'IT / Admin',   role: 'admin', color: '#1a3a5c', av: 'A' },
-    { id: 'sarah.k', name: 'Sarah K',       dept: 'Marketing',    role: 'user',  color: '#7c4dcd', av: 'S' },
-    { id: 'john.m',  name: 'John M',        dept: 'Finance',      role: 'user',  color: '#0088cc', av: 'J' },
-    { id: 'priya.r', name: 'Priya R',       dept: 'Operations',   role: 'user',  color: '#d4500a', av: 'P' },
-];
+const AVATAR_COLORS   = ['#7c4dcd','#0088cc','#d4500a','#146c3d','#c0392b','#16a085','#8e44ad','#d35400','#2980b9','#27ae60'];
 
 // ════════════════════════════════════════════════════════════════════════════
-//  DEMO IN-MEMORY DATABASE
+//  DEMO DATABASE
 // ════════════════════════════════════════════════════════════════════════════
+const col = (n,dt,nl=true,ml=null) => ({columnName:n,dataType:dt,isIdentity:false,isNullable:nl,maxLength:ml});
+const pk  = (n='ID')               => ({columnName:n,dataType:'int',isIdentity:true,isNullable:false,maxLength:null});
+const dt_ = (n,nl=true)            => ({columnName:n,dataType:'datetime',isIdentity:false,isNullable:nl,maxLength:null});
+const bit = (n,nl=false)           => ({columnName:n,dataType:'bit',isIdentity:false,isNullable:nl,maxLength:null});
 
-// Column definition helpers
-const col = (n, dt, nullable = true, ml = null) =>
-    ({ columnName: n, dataType: dt, isIdentity: false, isNullable: nullable, maxLength: ml });
-const pk  = (n = 'ID') =>
-    ({ columnName: n, dataType: 'int', isIdentity: true, isNullable: false, maxLength: null });
-const dt_ = (n, nullable = true) =>
-    ({ columnName: n, dataType: 'datetime', isIdentity: false, isNullable: nullable, maxLength: null });
-const bit = (n, nullable = false) =>
-    ({ columnName: n, dataType: 'bit', isIdentity: false, isNullable: nullable, maxLength: null });
-
-// Common trailing columns every table shares
 const COMMON_TAIL = [
-    bit('Active', false),
-    dt_('CreatedDate', false),
-    dt_('UpdatedDate', true),
-    col('LastModifiedBy', 'nvarchar', true, 100),
+    bit('Active',false), dt_('CreatedDate',false), dt_('UpdatedDate',true),
+    col('LastModifiedBy','nvarchar',true,100),
 ];
 
 const DEMO_DB = {
 
-    // ── User permissions: { userId: { tableName: 'none'|'view'|'edit' } } ──
+    // ── Users (mutable — admin can add/remove) ────────────────────────────
+    users: [
+        { id:'admin',   winUser:'DOMAIN\\admin',   name:'Administrator', dept:'IT / Admin',   role:'admin', color:'#1a3a5c', av:'A' },
+        { id:'sarah.k', winUser:'DOMAIN\\sarah.k', name:'Sarah K',       dept:'Marketing',    role:'user',  color:'#7c4dcd', av:'S' },
+        { id:'john.m',  winUser:'DOMAIN\\john.m',  name:'John M',        dept:'Finance',      role:'user',  color:'#0088cc', av:'J' },
+        { id:'priya.r', winUser:'DOMAIN\\priya.r', name:'Priya R',       dept:'Operations',   role:'user',  color:'#d4500a', av:'P' },
+    ],
+
+    // ── Permissions: { userId: { tableName: 'none'|'view'|'edit' } } ─────
     permissions: {
         'sarah.k': { Currency:'edit',  Country:'view', ProductCategory:'edit', PaymentMethod:'none', TaxRate:'none' },
         'john.m':  { Currency:'view',  Country:'none', ProductCategory:'none', PaymentMethod:'edit', TaxRate:'edit' },
         'priya.r': { Currency:'none',  Country:'none', ProductCategory:'view', PaymentMethod:'edit', TaxRate:'none' },
     },
 
+    // ── Tables ────────────────────────────────────────────────────────────
     tables: {
-
         Currency: {
-            nextId: 11,
-            columns: [ pk(), col('Code','varchar',false,3), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), ...COMMON_TAIL ],
-            records: [
-                { ID:1,  Code:'USD', Value:'US Dollar',         Description:'United States Dollar — global reserve currency', Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:2,  Code:'EUR', Value:'Euro',              Description:'European Union common currency',                  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:3,  Code:'GBP', Value:'British Pound',     Description:'United Kingdom pound sterling',                   Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:4,  Code:'AUD', Value:'Australian Dollar', Description:'Australia and Oceania',                           Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:5,  Code:'CAD', Value:'Canadian Dollar',   Description:'Canada official currency',                        Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:6,  Code:'JPY', Value:'Japanese Yen',      Description:'Japan official currency',                         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:7,  Code:'SGD', Value:'Singapore Dollar',  Description:'Singapore official currency',                     Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:8,  Code:'CHF', Value:'Swiss Franc',       Description:'Switzerland official currency',                   Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:9,  Code:'MYR', Value:'Malaysian Ringgit', Description:'Malaysia official currency',                      Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:10, Code:'BTC', Value:'Bitcoin',           Description:'Digital cryptocurrency — legacy, no longer used', Active:false, CreatedDate:'2024-01-03T08:00:00', UpdatedDate:'2024-06-01T10:00:00', LastModifiedBy:'Admin' },
+            nextId:11,
+            columns:[pk(), col('Code','varchar',false,3), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), ...COMMON_TAIL],
+            records:[
+                {ID:1, Code:'USD',Value:'US Dollar',        Description:'United States Dollar — global reserve currency',Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:2, Code:'EUR',Value:'Euro',             Description:'European Union common currency',                Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:3, Code:'GBP',Value:'British Pound',    Description:'United Kingdom pound sterling',                 Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:4, Code:'AUD',Value:'Australian Dollar',Description:'Australia and Oceania',                         Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:5, Code:'CAD',Value:'Canadian Dollar',  Description:'Canada official currency',                      Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:6, Code:'JPY',Value:'Japanese Yen',     Description:'Japan official currency',                       Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:7, Code:'SGD',Value:'Singapore Dollar', Description:'Singapore official currency',                   Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:8, Code:'CHF',Value:'Swiss Franc',      Description:'Switzerland official currency',                 Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:9, Code:'MYR',Value:'Malaysian Ringgit',Description:'Malaysia official currency',                    Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:10,Code:'BTC',Value:'Bitcoin',          Description:'Digital cryptocurrency — legacy, no longer used',Active:false,CreatedDate:'2024-01-03T08:00:00',UpdatedDate:'2024-06-01T10:00:00',LastModifiedBy:'Admin'},
             ]
         },
-
         Country: {
-            nextId: 13,
-            columns: [ pk(), col('Code','varchar',false,3), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), col('RegionCode','varchar',true,10), col('CapitalCity','nvarchar',true,100), ...COMMON_TAIL ],
-            records: [
-                { ID:1,  Code:'USA', Value:'United States',  Description:'United States of America',         RegionCode:'AMER', CapitalCity:'Washington D.C.', Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:2,  Code:'GBR', Value:'United Kingdom', Description:'Great Britain and Northern Ireland', RegionCode:'EMEA', CapitalCity:'London',         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:3,  Code:'AUS', Value:'Australia',      Description:'Commonwealth of Australia',         RegionCode:'APAC', CapitalCity:'Canberra',        Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:4,  Code:'DEU', Value:'Germany',        Description:'Federal Republic of Germany',       RegionCode:'EMEA', CapitalCity:'Berlin',          Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:5,  Code:'JPN', Value:'Japan',          Description:'Island nation in East Asia',        RegionCode:'APAC', CapitalCity:'Tokyo',           Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:6,  Code:'CAN', Value:'Canada',         Description:'Second largest country by area',    RegionCode:'AMER', CapitalCity:'Ottawa',          Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:7,  Code:'SGP', Value:'Singapore',      Description:'City-state in Southeast Asia',      RegionCode:'APAC', CapitalCity:'Singapore',       Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:8,  Code:'MYS', Value:'Malaysia',       Description:'Southeast Asian nation',            RegionCode:'APAC', CapitalCity:'Kuala Lumpur',    Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:9,  Code:'FRA', Value:'France',         Description:'Western European nation',           RegionCode:'EMEA', CapitalCity:'Paris',           Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:10, Code:'IND', Value:'India',          Description:'South Asian republic',              RegionCode:'APAC', CapitalCity:'New Delhi',       Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:11, Code:'CHN', Value:'China',          Description:"People's Republic of China",        RegionCode:'APAC', CapitalCity:'Beijing',         Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:12, Code:'YUG', Value:'Yugoslavia',     Description:'Former Balkan federation — dissolved 1992', RegionCode:'EMEA', CapitalCity:'Belgrade', Active:false, CreatedDate:'2024-01-03T08:00:00', UpdatedDate:'2024-03-15T09:00:00', LastModifiedBy:'Admin' },
+            nextId:13,
+            columns:[pk(),col('Code','varchar',false,3),col('Value','nvarchar',false,100),col('Description','nvarchar',true,500),col('RegionCode','varchar',true,10),col('CapitalCity','nvarchar',true,100),...COMMON_TAIL],
+            records:[
+                {ID:1, Code:'USA',Value:'United States', Description:'United States of America',         RegionCode:'AMER',CapitalCity:'Washington D.C.',Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:2, Code:'GBR',Value:'United Kingdom',Description:'Great Britain and Northern Ireland',RegionCode:'EMEA',CapitalCity:'London',        Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:3, Code:'AUS',Value:'Australia',     Description:'Commonwealth of Australia',         RegionCode:'APAC',CapitalCity:'Canberra',       Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:4, Code:'DEU',Value:'Germany',       Description:'Federal Republic of Germany',       RegionCode:'EMEA',CapitalCity:'Berlin',         Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:5, Code:'JPN',Value:'Japan',         Description:'Island nation in East Asia',        RegionCode:'APAC',CapitalCity:'Tokyo',          Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:6, Code:'CAN',Value:'Canada',        Description:'Second largest country by area',    RegionCode:'AMER',CapitalCity:'Ottawa',         Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:7, Code:'SGP',Value:'Singapore',     Description:'City-state in Southeast Asia',      RegionCode:'APAC',CapitalCity:'Singapore',      Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:8, Code:'MYS',Value:'Malaysia',      Description:'Southeast Asian nation',            RegionCode:'APAC',CapitalCity:'Kuala Lumpur',   Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:9, Code:'FRA',Value:'France',        Description:'Western European nation',           RegionCode:'EMEA',CapitalCity:'Paris',          Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:10,Code:'IND',Value:'India',         Description:'South Asian republic',              RegionCode:'APAC',CapitalCity:'New Delhi',      Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:11,Code:'CHN',Value:'China',         Description:"People's Republic of China",        RegionCode:'APAC',CapitalCity:'Beijing',        Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:12,Code:'YUG',Value:'Yugoslavia',    Description:'Former Balkan federation — dissolved 1992',RegionCode:'EMEA',CapitalCity:'Belgrade', Active:false,CreatedDate:'2024-01-03T08:00:00',UpdatedDate:'2024-03-15T09:00:00',LastModifiedBy:'Admin'},
             ]
         },
-
         ProductCategory: {
-            nextId: 9,
-            columns: [ pk(), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), col('SortOrder','int',true), ...COMMON_TAIL ],
-            records: [
-                { ID:1, Value:'Electronics',       Description:'Electronic devices and accessories',            SortOrder:1,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:2, Value:'Clothing & Apparel',Description:'Fashion, clothing and footwear',                SortOrder:2,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:3, Value:'Food & Beverages',  Description:'Consumable food products and drinks',           SortOrder:3,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:4, Value:'Home & Garden',     Description:'Household items, furniture and gardening',      SortOrder:4,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:5, Value:'Sports & Outdoors', Description:'Sporting goods, fitness and outdoor equipment', SortOrder:5,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:6, Value:'Books & Media',     Description:'Books, movies, music and digital media',        SortOrder:6,  Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:7, Value:'Health & Beauty',   Description:'Personal care, health and beauty products',     SortOrder:7,  Active:true,  CreatedDate:'2024-01-02T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:8, Value:'Toys & Games',      Description:'Legacy — merged into Electronics 2024',         SortOrder:99, Active:false, CreatedDate:'2024-01-02T08:00:00', UpdatedDate:'2024-09-01T10:00:00', LastModifiedBy:'Admin' },
+            nextId:9,
+            columns:[pk(),col('Value','nvarchar',false,100),col('Description','nvarchar',true,500),col('SortOrder','int',true),...COMMON_TAIL],
+            records:[
+                {ID:1,Value:'Electronics',       Description:'Electronic devices and accessories',           SortOrder:1, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:2,Value:'Clothing & Apparel',Description:'Fashion, clothing and footwear',               SortOrder:2, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:3,Value:'Food & Beverages',  Description:'Consumable food products and drinks',          SortOrder:3, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:4,Value:'Home & Garden',     Description:'Household items, furniture and gardening',     SortOrder:4, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:5,Value:'Sports & Outdoors', Description:'Sporting goods, fitness and outdoor equipment',SortOrder:5, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:6,Value:'Books & Media',     Description:'Books, movies, music and digital media',       SortOrder:6, Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:7,Value:'Health & Beauty',   Description:'Personal care, health and beauty products',    SortOrder:7, Active:true, CreatedDate:'2024-01-02T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:8,Value:'Toys & Games',      Description:'Legacy — merged into Electronics 2024',        SortOrder:99,Active:false,CreatedDate:'2024-01-02T08:00:00',UpdatedDate:'2024-09-01T10:00:00',LastModifiedBy:'Admin'},
             ]
         },
-
         PaymentMethod: {
-            nextId: 7,
-            columns: [ pk(), col('Code','varchar',false,20), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), bit('IsOnline',false), col('ProcessingFeePercent','decimal',true), ...COMMON_TAIL ],
-            records: [
-                { ID:1, Code:'CC',   Value:'Credit Card',   Description:'Visa, Mastercard, Amex accepted',IsOnline:true,  ProcessingFeePercent:2.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:2, Code:'DC',   Value:'Debit Card',    Description:'Direct bank debit card',          IsOnline:true,  ProcessingFeePercent:1.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:3, Code:'PP',   Value:'PayPal',        Description:'Online PayPal payments',          IsOnline:true,  ProcessingFeePercent:3.0, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:4, Code:'BT',   Value:'Bank Transfer', Description:'Direct bank wire transfer',       IsOnline:false, ProcessingFeePercent:0.5, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:5, Code:'CASH', Value:'Cash',          Description:'In-person cash payment',          IsOnline:false, ProcessingFeePercent:0.0, Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:6, Code:'CHEQ', Value:'Cheque',        Description:'Bank cheque — being phased out',  IsOnline:false, ProcessingFeePercent:1.0, Active:false, CreatedDate:'2024-01-02T08:00:00', UpdatedDate:'2024-11-01T09:00:00', LastModifiedBy:'Admin' },
+            nextId:7,
+            columns:[pk(),col('Code','varchar',false,20),col('Value','nvarchar',false,100),col('Description','nvarchar',true,500),bit('IsOnline',false),col('ProcessingFeePercent','decimal',true),...COMMON_TAIL],
+            records:[
+                {ID:1,Code:'CC',  Value:'Credit Card',  Description:'Visa, Mastercard, Amex accepted',IsOnline:true, ProcessingFeePercent:2.5,Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:2,Code:'DC',  Value:'Debit Card',   Description:'Direct bank debit card',          IsOnline:true, ProcessingFeePercent:1.5,Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:3,Code:'PP',  Value:'PayPal',       Description:'Online PayPal payments',          IsOnline:true, ProcessingFeePercent:3.0,Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:4,Code:'BT',  Value:'Bank Transfer',Description:'Direct bank wire transfer',       IsOnline:false,ProcessingFeePercent:0.5,Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:5,Code:'CASH',Value:'Cash',         Description:'In-person cash payment',          IsOnline:false,ProcessingFeePercent:0.0,Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:6,Code:'CHEQ',Value:'Cheque',       Description:'Bank cheque — being phased out',  IsOnline:false,ProcessingFeePercent:1.0,Active:false,CreatedDate:'2024-01-02T08:00:00',UpdatedDate:'2024-11-01T09:00:00',LastModifiedBy:'Admin'},
             ]
         },
-
         TaxRate: {
-            nextId: 6,
-            columns: [ pk(), col('Value','nvarchar',false,100), col('Description','nvarchar',true,500), col('Rate','decimal',false), col('EffectiveDate','date',false), col('ExpiryDate','date',true), ...COMMON_TAIL ],
-            records: [
-                { ID:1, Value:'Standard Rate',    Description:'Standard goods and services tax rate',        Rate:10.0, EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:2, Value:'Reduced Rate',     Description:'Reduced rate for essential goods',            Rate:5.0,  EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:3, Value:'Zero Rated',       Description:'Zero-rated exports and basic food items',     Rate:0.0,  EffectiveDate:'2020-01-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:4, Value:'Luxury Rate',      Description:'Applied to luxury and discretionary items',   Rate:15.0, EffectiveDate:'2022-07-01', ExpiryDate:null,         Active:true,  CreatedDate:'2024-01-01T08:00:00', UpdatedDate:null, LastModifiedBy:'Admin' },
-                { ID:5, Value:'Pre-2020 Standard',Description:'Historical standard rate before 2020 reform', Rate:7.0,  EffectiveDate:'2015-01-01', ExpiryDate:'2019-12-31', Active:false, CreatedDate:'2024-01-01T08:00:00', UpdatedDate:'2020-01-01T00:00:00', LastModifiedBy:'Admin' },
+            nextId:6,
+            columns:[pk(),col('Value','nvarchar',false,100),col('Description','nvarchar',true,500),col('Rate','decimal',false),col('EffectiveDate','date',false),col('ExpiryDate','date',true),...COMMON_TAIL],
+            records:[
+                {ID:1,Value:'Standard Rate',    Description:'Standard goods and services tax rate',       Rate:10.0,EffectiveDate:'2020-01-01',ExpiryDate:null,        Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:2,Value:'Reduced Rate',     Description:'Reduced rate for essential goods',           Rate:5.0, EffectiveDate:'2020-01-01',ExpiryDate:null,        Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:3,Value:'Zero Rated',       Description:'Zero-rated exports and basic food items',    Rate:0.0, EffectiveDate:'2020-01-01',ExpiryDate:null,        Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:4,Value:'Luxury Rate',      Description:'Applied to luxury and discretionary items',  Rate:15.0,EffectiveDate:'2022-07-01',ExpiryDate:null,        Active:true, CreatedDate:'2024-01-01T08:00:00',UpdatedDate:null,LastModifiedBy:'Admin'},
+                {ID:5,Value:'Pre-2020 Standard',Description:'Historical standard rate before 2020 reform',Rate:7.0, EffectiveDate:'2015-01-01',ExpiryDate:'2019-12-31',Active:false,CreatedDate:'2024-01-01T08:00:00',UpdatedDate:'2020-01-01T00:00:00',LastModifiedBy:'Admin'},
             ]
         }
     },
 
-    // ── Operations ──────────────────────────────────────────────────────────
-
-    getTables() { return Object.keys(this.tables); },
-    getColumns(tbl) { return this.tables[tbl]?.columns ?? []; },
+    // ── DB operations ─────────────────────────────────────────────────────
+    getTables()        { return Object.keys(this.tables); },
+    getColumns(tbl)    { return this.tables[tbl]?.columns ?? []; },
 
     getRecords(tbl, page, ps, search, showInactive) {
-        let rows = this.tables[tbl].records.map(r => ({ ...r }));
+        let rows = this.tables[tbl].records.map(r => ({...r}));
         if (!showInactive) rows = rows.filter(r => r.Active !== false && r.Active !== 0);
         if (search) {
-            const q = search.toLowerCase();
+            const q  = search.toLowerCase();
             const tc = this.tables[tbl].columns
                 .filter(c => c.dataType.includes('char') || c.dataType.includes('text'))
                 .map(c => c.columnName);
             rows = rows.filter(r => tc.some(c => r[c] != null && String(r[c]).toLowerCase().includes(q)));
         }
-        const total = rows.length;
-        const offset = (page - 1) * ps;
-        return { data: rows.slice(offset, offset + ps), totalCount: total,
-                 totalPages: Math.max(1, Math.ceil(total / ps)), page, pageSize: ps };
+        const total = rows.length, offset = (page-1)*ps;
+        return {data:rows.slice(offset,offset+ps), totalCount:total,
+                totalPages:Math.max(1,Math.ceil(total/ps)), page, pageSize:ps};
     },
 
     getRecordById(tbl, idCol, id) {
         const r = this.tables[tbl].records.find(r => String(r[idCol]) === String(id));
-        return r ? { ...r } : null;
+        return r ? {...r} : null;
     },
 
     insertRecord(tbl, fields, modifiedBy) {
         const t = this.tables[tbl];
         const idCol = t.columns.find(c => c.isIdentity)?.columnName ?? 'ID';
-        const now = new Date().toISOString();
-        const row = { [idCol]: t.nextId++ };
+        const now = new Date().toISOString(), row = {[idCol]: t.nextId++};
         t.columns.forEach(c => {
             if (c.isIdentity) return;
             const l = c.columnName.toLowerCase();
             if (AUTO_CREATED.includes(l))    { row[c.columnName] = now; return; }
             if (AUTO_UPDATED.includes(l))    { row[c.columnName] = null; return; }
             if (AUTO_MODIFIEDBY.includes(l)) { row[c.columnName] = modifiedBy; return; }
-            if (c.columnName === 'Active' && fields[c.columnName] === undefined)
-                { row[c.columnName] = true; return; }
+            if (c.columnName === 'Active' && fields[c.columnName] === undefined) { row[c.columnName] = true; return; }
             row[c.columnName] = fields[c.columnName] !== undefined ? fields[c.columnName] : null;
         });
         t.records.push(row);
@@ -572,7 +580,6 @@ const DEMO_DB = {
 // ════════════════════════════════════════════════════════════════════════════
 //  APP
 // ════════════════════════════════════════════════════════════════════════════
-
 const app = {
     currentUser:    null,
     selectedUserId: null,
@@ -585,96 +592,110 @@ const app = {
     editMode:       false,
     editId:         null,
     editIdColumn:   null,
-    activeTab:      'data',
 
     init() {
+        this.renderLoginScreen();
         document.getElementById('searchInput')
             .addEventListener('keypress', e => { if (e.key === 'Enter') this.search(); });
     },
 
-    // ── Auth ──────────────────────────────────────────────────────────────
+    // ── Login screen ──────────────────────────────────────────────────────
+
+    renderLoginScreen() {
+        const list = document.getElementById('userOptionsList');
+        list.innerHTML = '';
+        DEMO_DB.users.forEach(u => {
+            const div = document.createElement('div');
+            div.className = 'user-option';
+            div.id = `opt_${u.id}`;
+            div.onclick = () => this.selectUser(u.id);
+            div.innerHTML = `
+                <div class="av" style="background:${u.color};width:36px;height:36px;font-size:.82rem">${u.av}</div>
+                <div>
+                  <div class="uname">${escHtml(u.name)}</div>
+                  <div class="urole">
+                    ${u.role === 'admin'
+                        ? '<i class="bi bi-shield-fill-check me-1 text-warning"></i>Administrator — full access'
+                        : `<i class="bi bi-building me-1"></i>${escHtml(u.dept)}`}
+                  </div>
+                </div>`;
+            list.appendChild(div);
+        });
+        // Re-select if previously selected user still exists
+        if (this.selectedUserId && DEMO_DB.users.find(u => u.id === this.selectedUserId)) {
+            document.getElementById(`opt_${this.selectedUserId}`)?.classList.add('selected');
+            document.getElementById('loginBtn').disabled = false;
+        } else {
+            this.selectedUserId = null;
+            document.getElementById('loginBtn').disabled = true;
+        }
+    },
 
     selectUser(id) {
         this.selectedUserId = id;
-        document.querySelectorAll('.user-option-card').forEach(el => el.classList.remove('selected'));
+        document.querySelectorAll('.user-option').forEach(el => el.classList.remove('selected'));
         document.getElementById(`opt_${id}`)?.classList.add('selected');
         document.getElementById('loginBtn').disabled = false;
     },
 
     login() {
         if (!this.selectedUserId) return;
-        this.currentUser = USERS.find(u => u.id === this.selectedUserId);
+        this.currentUser = DEMO_DB.users.find(u => u.id === this.selectedUserId);
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainApp').style.display = 'block';
-        this.renderUserPill();
-        if (this.currentUser.role === 'admin') {
-            document.getElementById('adminTabLi').style.display = '';
-        }
+        // Navbar
+        document.getElementById('navAv').textContent = this.currentUser.av;
+        document.getElementById('navAv').style.background = this.currentUser.color;
+        document.getElementById('navName').textContent = this.currentUser.name;
+        const badge = document.getElementById('navBadge');
+        badge.textContent = this.currentUser.role === 'admin' ? 'ADMIN' : this.currentUser.dept.toUpperCase();
+        badge.className   = this.currentUser.role === 'admin'
+            ? 'badge bg-warning text-dark ms-1' : 'badge bg-light text-secondary ms-1';
+        badge.style.fontSize = '.63rem';
+        // Admin tab visibility
+        document.getElementById('adminTabLi').style.display =
+            this.currentUser.role === 'admin' ? '' : 'none';
         this.populateTableDropdown();
     },
 
     logout() {
-        this.currentUser = null;
-        this.selectedUserId = null;
-        this.currentTable = null;
-        this.currentColumns = [];
-        document.querySelectorAll('.user-option-card').forEach(el => el.classList.remove('selected'));
-        document.getElementById('loginBtn').disabled = true;
-        document.getElementById('mainApp').style.display = 'none';
+        this.currentUser = null; this.selectedUserId = null; this.currentTable = null;
+        document.getElementById('mainApp').style.display  = 'none';
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('adminTabLi').style.display = 'none';
-        this.activeTab = 'data';
-        document.querySelectorAll('.main-tabs .nav-link').forEach((el, i) => {
-            el.classList.toggle('active', i === 0);
-        });
+        // Reset tabs
+        document.querySelectorAll('.main-tabs .nav-link').forEach((el,i) => el.classList.toggle('active', i===0));
         document.getElementById('tabData').classList.add('active');
         document.getElementById('tabAdmin').classList.remove('active');
-    },
-
-    renderUserPill() {
-        const u = this.currentUser;
-        document.getElementById('userAv').textContent = u.av;
-        document.getElementById('userAv').style.background = u.color;
-        document.getElementById('userPillName').textContent = u.name;
-        const badge = document.getElementById('userRoleBadge');
-        badge.textContent = u.role === 'admin' ? 'ADMIN' : u.dept.toUpperCase();
-        badge.className   = u.role === 'admin'
-            ? 'badge bg-warning text-dark ms-1'
-            : 'badge bg-light text-secondary ms-1';
-        badge.style.fontSize = '.65rem';
+        this.renderLoginScreen();
     },
 
     // ── Permissions ───────────────────────────────────────────────────────
 
-    getPermission(tableName) {
+    getPermission(tbl) {
         if (this.currentUser?.role === 'admin') return 'edit';
-        return DEMO_DB.permissions[this.currentUser?.id]?.[tableName] ?? 'none';
+        return DEMO_DB.permissions[this.currentUser?.id]?.[tbl] ?? 'none';
     },
 
     getVisibleTables() {
         const all = DEMO_DB.getTables();
-        if (this.currentUser?.role === 'admin')
-            return all.map(t => ({ name: t, perm: 'edit' }));
+        if (this.currentUser?.role === 'admin') return all.map(t => ({name:t, perm:'edit'}));
         return all
-            .map(t => ({ name: t, perm: DEMO_DB.permissions[this.currentUser.id]?.[t] ?? 'none' }))
+            .map(t => ({name:t, perm: DEMO_DB.permissions[this.currentUser.id]?.[t] ?? 'none'}))
             .filter(t => t.perm !== 'none');
     },
 
-    isReadOnly() {
-        return this.getPermission(this.currentTable) === 'view';
-    },
+    isReadOnly() { return this.getPermission(this.currentTable) === 'view'; },
 
     // ── Tab switching ─────────────────────────────────────────────────────
 
     switchTab(tab) {
-        this.activeTab = tab;
         document.querySelectorAll('.main-tabs .nav-link').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-
-        const tabLi = tab === 'data' ? 0 : 1;
-        document.querySelectorAll('.main-tabs .nav-link')[tabLi]?.classList.add('active');
-        document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
-
+        const idx = tab === 'data' ? 0 : 1;
+        document.querySelectorAll('.main-tabs .nav-link')[idx]?.classList.add('active');
+        const pane = document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`);
+        pane.classList.add('active');
         if (tab === 'admin') this.renderAdminTab();
     },
 
@@ -683,24 +704,21 @@ const app = {
     populateTableDropdown() {
         const sel = document.getElementById('tableSelect');
         sel.innerHTML = '<option value="">-- Select a Table --</option>';
-        this.getVisibleTables().forEach(({ name, perm }) => {
-            const opt = document.createElement('option');
-            opt.value = name;
-            opt.textContent = perm === 'view' ? `${name}  (View Only)` : name;
-            sel.appendChild(opt);
+        this.getVisibleTables().forEach(({name, perm}) => {
+            const o = document.createElement('option');
+            o.value = name;
+            o.textContent = perm === 'view' ? `${name}  (View Only)` : name;
+            sel.appendChild(o);
         });
-        // Reset
         this.currentTable = null;
         ['addBtn','refreshBtn','searchBtn','clearSearchBtn'].forEach(id =>
             document.getElementById(id).disabled = true);
         document.getElementById('searchInput').disabled = true;
         document.getElementById('inactiveToggleWrap').style.display = 'none';
         document.getElementById('viewOnlyBadge').style.display = 'none';
-        document.getElementById('tableContainer').innerHTML = `
-            <div class="state-box">
-                <i class="bi bi-database state-icon"></i>
-                <p class="mb-0">Select a table above to view and manage records</p>
-            </div>`;
+        document.getElementById('tableContainer').innerHTML =
+            `<div class="state-box"><i class="bi bi-database state-icon"></i>
+             <p class="mb-0">Select a table above to view and manage records</p></div>`;
         document.getElementById('paginationBar').style.display = 'none';
     },
 
@@ -708,45 +726,39 @@ const app = {
         this.currentTable = document.getElementById('tableSelect').value || null;
         this.currentPage  = 1;
         document.getElementById('searchInput').value = '';
-
         const on = !!this.currentTable;
         ['refreshBtn','searchBtn','clearSearchBtn'].forEach(id =>
             document.getElementById(id).disabled = !on);
         document.getElementById('searchInput').disabled = !on;
-
         if (!on) {
             document.getElementById('addBtn').disabled = true;
             document.getElementById('inactiveToggleWrap').style.display = 'none';
             document.getElementById('viewOnlyBadge').style.display = 'none';
-            document.getElementById('tableContainer').innerHTML = `
-                <div class="state-box"><i class="bi bi-database state-icon"></i>
-                    <p class="mb-0">Select a table to view records</p></div>`;
+            document.getElementById('tableContainer').innerHTML =
+                `<div class="state-box"><i class="bi bi-database state-icon"></i>
+                 <p class="mb-0">Select a table to view records</p></div>`;
             document.getElementById('paginationBar').style.display = 'none';
             return;
         }
-
-        const readOnly = this.isReadOnly();
-        document.getElementById('addBtn').disabled = readOnly;
-        document.getElementById('viewOnlyBadge').style.display = readOnly ? 'inline-flex' : 'none';
-
+        const ro = this.isReadOnly();
+        document.getElementById('addBtn').disabled = ro;
+        document.getElementById('viewOnlyBadge').style.display = ro ? 'inline-flex' : 'none';
         this.currentColumns = DEMO_DB.getColumns(this.currentTable);
         const hasActive = this.currentColumns.some(c => c.columnName.toLowerCase() === 'active');
-        const itw = document.getElementById('inactiveToggleWrap');
-        itw.style.display = hasActive ? '' : 'none';
+        document.getElementById('inactiveToggleWrap').style.display = hasActive ? '' : 'none';
         document.getElementById('showInactive').checked = false;
-
         await this.loadRecords();
     },
 
     async loadRecords() {
         if (!this.currentTable) return;
-        const search      = document.getElementById('searchInput').value.trim();
-        const showInactive = document.getElementById('showInactive').checked;
+        const search     = document.getElementById('searchInput').value.trim();
+        const showInact  = document.getElementById('showInactive').checked;
         this.showLoading();
         const result = await this.apiGet(
             `/records/${enc(this.currentTable)}?page=${this.currentPage}&pageSize=${this.pageSize}`
-            + (search       ? `&search=${enc(search)}` : '')
-            + (showInactive ? `&showInactive=true`      : '')
+            + (search   ? `&search=${enc(search)}` : '')
+            + (showInact ? `&showInactive=true`     : '')
         );
         this.totalCount = result.totalCount;
         this.totalPages = result.totalPages;
@@ -761,36 +773,30 @@ const app = {
         if (!records || records.length === 0) {
             c.innerHTML = `<div class="state-box"><i class="bi bi-inbox state-icon"></i>
                 <p class="mb-0">No records found</p></div>`;
-            document.getElementById('paginationBar').style.display = 'none';
-            return;
+            document.getElementById('paginationBar').style.display = 'none'; return;
         }
-
-        const readOnly = this.isReadOnly();
+        const ro    = this.isReadOnly();
         const idCol = this.currentColumns.find(x => x.isIdentity)?.columnName
                    || this.currentColumns.find(x => x.columnName.toLowerCase() === 'id')?.columnName
                    || this.currentColumns[0].columnName;
-        const cols = this.currentColumns.map(x => x.columnName);
+        const cols  = this.currentColumns.map(x => x.columnName);
 
         let html = `<div class="table-wrapper"><div class="table-responsive">
             <table class="table table-hover table-bordered table-sm mb-0 table-app">
-            <thead><tr>
-            ${cols.map(c => `<th>${this.fmtHdr(c)}</th>`).join('')}
-            <th class="text-center" style="width:${readOnly ? 60 : 95}px">Actions</th>
-            </tr></thead><tbody>`;
+            <thead><tr>${cols.map(c => `<th>${this.fmtHdr(c)}</th>`).join('')}
+            <th class="text-center" style="width:${ro?60:95}px">Actions</th></tr></thead><tbody>`;
 
         records.forEach(row => {
-            const idVal    = row[idCol];
-            const rawActive = row['Active'] ?? row['active'];
-            const isActive  = rawActive === null || rawActive === undefined
-                ? true : rawActive !== false && rawActive !== 0;
-            html += `<tr class="${isActive ? '' : 'row-inactive'}">`;
+            const idVal = row[idCol];
+            const rawA  = row['Active'] ?? row['active'];
+            const isAct = rawA === null || rawA === undefined ? true : rawA !== false && rawA !== 0;
+            html += `<tr class="${isAct ? '' : 'row-inactive'}">`;
             cols.forEach(col => { html += `<td>${this.fmtCell(row[col], col)}</td>`; });
-
-            if (readOnly) {
+            if (ro) {
                 html += `<td class="text-center">
                     <button class="btn btn-sm btn-outline-secondary btn-action"
                         onclick="app.openViewModal('${escJs(String(idVal))}','${escJs(idCol)}')"
-                        title="View details"><i class="bi bi-eye-fill"></i></button></td>`;
+                        title="View"><i class="bi bi-eye-fill"></i></button></td>`;
             } else {
                 html += `<td class="text-center text-nowrap">
                     <button class="btn btn-sm btn-outline-primary btn-action me-1"
@@ -798,26 +804,22 @@ const app = {
                         title="Edit"><i class="bi bi-pencil-fill"></i></button>
                     <button class="btn btn-sm btn-outline-warning btn-action"
                         onclick="app.confirmDelete('${escJs(String(idVal))}','${escJs(idCol)}')"
-                        title="Deactivate" ${!isActive ? 'disabled' : ''}>
+                        title="Deactivate" ${!isAct ? 'disabled' : ''}>
                         <i class="bi bi-slash-circle-fill"></i></button></td>`;
             }
             html += '</tr>';
         });
-
-        html += `</tbody></table></div></div>`;
-        c.innerHTML = html;
+        c.innerHTML = html + '</tbody></table></div></div>';
         document.getElementById('paginationBar').style.display = '';
     },
 
     fmtHdr(name) { return name.replace(/([A-Z])/g,' $1').replace(/_/g,' ').trim(); },
 
     fmtCell(val, colName) {
-        if (val === null || val === undefined)
-            return '<span class="cell-null">—</span>';
-        const c     = this.currentColumns.find(c => c.columnName === colName);
+        if (val === null || val === undefined) return '<span class="cell-null">—</span>';
+        const c = this.currentColumns.find(c => c.columnName === colName);
         const dtype = (c?.dataType || '').toLowerCase();
         const lower = colName.toLowerCase();
-
         if (dtype === 'bit') {
             const on = val === true || val === 1;
             if (lower === 'active')
@@ -831,53 +833,46 @@ const app = {
         if (dtype.includes('datetime') || dtype === 'date' || lower.includes('date')) {
             const d = new Date(val);
             if (!isNaN(d.getTime()))
-                return `<span class="text-nowrap">${dtype === 'date'
-                    ? d.toLocaleDateString() : d.toLocaleString()}</span>`;
+                return `<span class="text-nowrap">${dtype==='date' ? d.toLocaleDateString() : d.toLocaleString()}</span>`;
         }
         const str = String(val);
-        if (str.length > 60)
-            return `<span title="${escHtml(str)}">${escHtml(str.slice(0,60))}…</span>`;
-        return escHtml(str);
+        return str.length > 60
+            ? `<span title="${escHtml(str)}">${escHtml(str.slice(0,60))}…</span>`
+            : escHtml(str);
     },
 
     // ── Pagination ────────────────────────────────────────────────────────
 
     renderPagBar() {
-        const start = (this.currentPage - 1) * this.pageSize + 1;
-        const end   = Math.min(this.currentPage * this.pageSize, this.totalCount);
+        const start = (this.currentPage-1)*this.pageSize+1;
+        const end   = Math.min(this.currentPage*this.pageSize, this.totalCount);
         document.getElementById('recordCount').textContent =
-            `Showing ${start}–${end} of ${this.totalCount} record${this.totalCount !== 1 ? 's' : ''}`;
-
+            `Showing ${start}–${end} of ${this.totalCount} record${this.totalCount!==1?'s':''}`;
         const ul = document.getElementById('pagination');
         ul.innerHTML = '';
-        const addPg = (lbl, pg, dis, act = false) => {
+        const add = (lbl,pg,dis,act=false) => {
             const li = document.createElement('li');
-            li.className = `page-item ${dis ? 'disabled' : ''} ${act ? 'active' : ''}`;
-            li.innerHTML = `<a class="page-link" href="#"
-                onclick="app.goToPage(${pg});return false;">${lbl}</a>`;
+            li.className = `page-item ${dis?'disabled':''} ${act?'active':''}`;
+            li.innerHTML = `<a class="page-link" href="#" onclick="app.goToPage(${pg});return false;">${lbl}</a>`;
             ul.appendChild(li);
         };
-        addPg('«', 1, this.currentPage === 1);
-        addPg('‹', this.currentPage - 1, this.currentPage === 1);
-        let lo = Math.max(1, this.currentPage - 2);
-        let hi = Math.min(this.totalPages, lo + 4);
-        if (hi - lo < 4) lo = Math.max(1, hi - 4);
-        for (let p = lo; p <= hi; p++) addPg(p, p, false, p === this.currentPage);
-        addPg('›', this.currentPage + 1, this.currentPage === this.totalPages);
-        addPg('»', this.totalPages, this.currentPage === this.totalPages);
+        add('«',1,this.currentPage===1);
+        add('‹',this.currentPage-1,this.currentPage===1);
+        let lo=Math.max(1,this.currentPage-2), hi=Math.min(this.totalPages,lo+4);
+        if (hi-lo<4) lo=Math.max(1,hi-4);
+        for (let p=lo;p<=hi;p++) add(p,p,false,p===this.currentPage);
+        add('›',this.currentPage+1,this.currentPage===this.totalPages);
+        add('»',this.totalPages,this.currentPage===this.totalPages);
     },
 
-    goToPage(p) { if (p < 1 || p > this.totalPages) return; this.currentPage = p; this.loadRecords(); },
-    onPageSizeChange() {
-        this.pageSize = parseInt(document.getElementById('pageSizeSelect').value, 10);
-        this.currentPage = 1; this.loadRecords();
-    },
-    onShowInactiveChange() { this.currentPage = 1; this.loadRecords(); },
+    goToPage(p)       { if (p<1||p>this.totalPages) return; this.currentPage=p; this.loadRecords(); },
+    onPageSizeChange(){ this.pageSize=parseInt(document.getElementById('pageSizeSelect').value,10); this.currentPage=1; this.loadRecords(); },
+    onShowInactiveChange() { this.currentPage=1; this.loadRecords(); },
 
-    // ── Add modal ─────────────────────────────────────────────────────────
+    // ── Modals ────────────────────────────────────────────────────────────
 
     openAddModal() {
-        this.editMode = false; this.editId = null;
+        this.editMode=false; this.editId=null;
         document.getElementById('modalTitle').textContent = `Add Record — ${this.currentTable}`;
         document.getElementById('saveBtn').style.display = '';
         document.querySelector('#modalFooter .btn-secondary').textContent = 'Cancel';
@@ -885,110 +880,82 @@ const app = {
         new bootstrap.Modal(document.getElementById('recordModal')).show();
     },
 
-    // ── Edit modal ────────────────────────────────────────────────────────
-
     async openEditModal(id, idColumn) {
-        this.editMode = true; this.editId = id; this.editIdColumn = idColumn;
+        this.editMode=true; this.editId=id; this.editIdColumn=idColumn;
         document.getElementById('modalTitle').textContent = `Edit Record — ${this.currentTable}`;
         document.getElementById('saveBtn').style.display = '';
         document.querySelector('#modalFooter .btn-secondary').textContent = 'Cancel';
-        const record = await this.apiGet(
-            `/records/${enc(this.currentTable)}/${enc(idColumn)}/${enc(id)}/single`);
+        const record = await this.apiGet(`/records/${enc(this.currentTable)}/${enc(idColumn)}/${enc(id)}/single`);
         this.renderFormFields(record, false);
         new bootstrap.Modal(document.getElementById('recordModal')).show();
     },
 
-    // ── View modal (read-only) ────────────────────────────────────────────
-
     async openViewModal(id, idColumn) {
-        document.getElementById('modalTitle').innerHTML =
-            `<i class="bi bi-eye me-2"></i>View Record — ${this.currentTable}`;
+        document.getElementById('modalTitle').innerHTML = `<i class="bi bi-eye me-2"></i>View Record — ${this.currentTable}`;
         document.getElementById('saveBtn').style.display = 'none';
         document.querySelector('#modalFooter .btn-secondary').textContent = 'Close';
-        const record = await this.apiGet(
-            `/records/${enc(this.currentTable)}/${enc(idColumn)}/${enc(id)}/single`);
+        const record = await this.apiGet(`/records/${enc(this.currentTable)}/${enc(idColumn)}/${enc(id)}/single`);
         this.renderFormFields(record, true);
         new bootstrap.Modal(document.getElementById('recordModal')).show();
     },
 
-    // ── Form fields ───────────────────────────────────────────────────────
-
-    renderFormFields(record, viewOnly = false) {
+    renderFormFields(record, viewOnly=false) {
         const container = document.getElementById('formFields');
         container.innerHTML = '';
-
         this.currentColumns.forEach(col => {
-            const lower      = col.columnName.toLowerCase();
-            const isAutoC    = AUTO_CREATED.includes(lower);
-            const isAutoU    = AUTO_UPDATED.includes(lower);
-            const isAutoMB   = AUTO_MODIFIEDBY.includes(lower);
-            const isReadOnly = col.isIdentity || isAutoC || isAutoU || isAutoMB || viewOnly;
-            const value      = record ? record[col.columnName] : null;
+            const lower   = col.columnName.toLowerCase();
+            const isAutoC = AUTO_CREATED.includes(lower);
+            const isAutoU = AUTO_UPDATED.includes(lower);
+            const isAutoM = AUTO_MODIFIEDBY.includes(lower);
+            const isRO    = col.isIdentity || isAutoC || isAutoU || isAutoM || viewOnly;
+            const value   = record ? record[col.columnName] : null;
 
             const div = document.createElement('div');
-            div.className = col.dataType === 'bit'        ? 'col-md-4'
-                          : col.dataType.includes('text') ? 'col-12'
-                          : 'col-md-6';
+            div.className = col.dataType==='bit' ? 'col-md-4' : col.dataType.includes('text') ? 'col-12' : 'col-md-6';
 
-            const req   = !col.isNullable && !col.isIdentity && !isAutoC && !isAutoU && !isAutoMB && !viewOnly;
-            const label = `<div class="field-label">${this.fmtHdr(col.columnName)}
-                ${req ? '<span class="text-danger ms-1">*</span>' : ''}</div>`;
+            const req   = !col.isNullable && !col.isIdentity && !isAutoC && !isAutoU && !isAutoM && !viewOnly;
+            const label = `<div class="field-label">${this.fmtHdr(col.columnName)}${req?'<span class="text-danger ms-1">*</span>':''}</div>`;
 
-            let input = '', hint = '';
+            let input='', hint='';
 
-            if (isAutoMB) {
-                const disp = isAutoMB && !record
-                    ? `(will be set to: ${this.currentUser.name})`
-                    : (value ? `${value}` : '—');
-                input = `<input type="text" class="form-control form-control-sm"
-                    id="field_${col.columnName}" value="${escHtml(disp)}" readonly>`;
-                hint = 'Auto-set to current user on save';
-            } else if (isReadOnly) {
-                let disp = '(auto)';
+            if (isAutoM) {
+                const disp = !record ? `(will be set to: ${this.currentUser.name})` : (value||'—');
+                input = `<input type="text" class="form-control form-control-sm" value="${escHtml(disp)}" readonly>`;
+                hint  = 'Auto-set to the current user on save';
+            } else if (isRO) {
+                let disp = col.isIdentity ? '(auto)' : '(auto-set on save)';
                 if (value !== null && value !== undefined) {
-                    if ((col.dataType.includes('datetime') || col.dataType === 'date')
-                        && !isNaN(new Date(value).getTime()))
+                    if ((col.dataType.includes('datetime')||col.dataType==='date') && !isNaN(new Date(value).getTime()))
                         disp = new Date(value).toLocaleString();
                     else disp = String(value);
-                } else if (!col.isIdentity) disp = '(auto-set on save)';
-                input = `<input type="text" class="form-control form-control-sm"
-                    id="field_${col.columnName}" value="${escHtml(disp)}" readonly>`;
-                hint = col.isIdentity ? 'Auto-generated ID'
-                     : isAutoC         ? 'Set on create'
-                     :                   'Set on update';
-            } else if (col.dataType === 'bit') {
-                const chk = (value === true || value === 1 || (value === null && col.columnName !== 'Active') || value === null) ? 'checked' : '';
+                }
+                input = `<input type="text" class="form-control form-control-sm" value="${escHtml(disp)}" readonly>`;
+                hint  = col.isIdentity ? 'Auto-generated ID' : isAutoC ? 'Set on create' : 'Set on update';
+            } else if (col.dataType==='bit') {
+                const chk = (value===true||value===1||value===null)?'checked':'';
                 input = `<div class="form-check form-switch mt-2">
-                    <input class="form-check-input" type="checkbox"
-                        id="field_${col.columnName}" ${chk}>
+                    <input class="form-check-input" type="checkbox" id="field_${col.columnName}" ${chk}>
                     <label class="form-check-label small" for="field_${col.columnName}">
-                        ${(value === true || value === 1 || value === null) ? 'Yes / Active' : 'No / Inactive'}
+                        ${(value===true||value===1||value===null)?'Yes / Active':'No / Inactive'}
                     </label></div>`;
                 div.addEventListener('change', e => {
                     const lbl = div.querySelector('.form-check-label');
                     if (lbl) lbl.textContent = e.target.checked ? 'Yes / Active' : 'No / Inactive';
                 });
-            } else if (col.dataType.includes('datetime') || col.dataType === 'date') {
-                const type = col.dataType === 'date' ? 'date' : 'datetime-local';
-                const fmt  = this.fmtDateInput(value, col.dataType === 'date');
-                input = `<input type="${type}" class="form-control form-control-sm"
-                    id="field_${col.columnName}" value="${fmt}">`;
+            } else if (col.dataType.includes('datetime')||col.dataType==='date') {
+                const type = col.dataType==='date'?'date':'datetime-local';
+                const fmt  = this.fmtDateInput(value, col.dataType==='date');
+                input = `<input type="${type}" class="form-control form-control-sm" id="field_${col.columnName}" value="${fmt}">`;
             } else if (['int','bigint','smallint','tinyint'].includes(col.dataType)) {
-                input = `<input type="number" step="1" class="form-control form-control-sm"
-                    id="field_${col.columnName}" value="${value ?? ''}">`;
+                input = `<input type="number" step="1" class="form-control form-control-sm" id="field_${col.columnName}" value="${value??''}">`;
             } else if (['decimal','numeric','float','real','money'].includes(col.dataType)) {
-                input = `<input type="number" step="any" class="form-control form-control-sm"
-                    id="field_${col.columnName}" value="${value ?? ''}">`;
+                input = `<input type="number" step="any" class="form-control form-control-sm" id="field_${col.columnName}" value="${value??''}">`;
             } else if (col.dataType.includes('text')) {
-                input = `<textarea class="form-control form-control-sm"
-                    id="field_${col.columnName}" rows="3">${escHtml(value ?? '')}</textarea>`;
+                input = `<textarea class="form-control form-control-sm" id="field_${col.columnName}" rows="3">${escHtml(value??'')}</textarea>`;
             } else {
-                const ml = col.maxLength && col.maxLength > 0 ? `maxlength="${col.maxLength}"` : '';
-                input = `<input type="text" class="form-control form-control-sm"
-                    id="field_${col.columnName}"
-                    value="${escHtml(String(value ?? ''))}" ${ml}>`;
+                const ml = col.maxLength && col.maxLength>0 ? `maxlength="${col.maxLength}"` : '';
+                input = `<input type="text" class="form-control form-control-sm" id="field_${col.columnName}" value="${escHtml(String(value??''))}" ${ml}>`;
             }
-
             div.innerHTML = label + input + (hint ? `<div class="field-hint">${hint}</div>` : '');
             container.appendChild(div);
         });
@@ -998,37 +965,31 @@ const app = {
         if (!val) return '';
         const d = new Date(val);
         if (isNaN(d.getTime())) return '';
-        return dateOnly ? d.toISOString().split('T')[0] : d.toISOString().slice(0, 16);
+        return dateOnly ? d.toISOString().split('T')[0] : d.toISOString().slice(0,16);
     },
-
-    // ── Save ──────────────────────────────────────────────────────────────
 
     async saveRecord() {
         const fields = {};
         this.currentColumns.forEach(col => {
             const lower = col.columnName.toLowerCase();
-            if (col.isIdentity || AUTO_CREATED.includes(lower) ||
-                AUTO_UPDATED.includes(lower) || AUTO_MODIFIEDBY.includes(lower)) return;
+            if (col.isIdentity || AUTO_CREATED.includes(lower) || AUTO_UPDATED.includes(lower) || AUTO_MODIFIEDBY.includes(lower)) return;
             const el = document.getElementById(`field_${col.columnName}`);
             if (!el) return;
-            if (col.dataType === 'bit')
+            if (col.dataType==='bit')
                 fields[col.columnName] = el.checked;
             else if (['int','bigint','smallint','tinyint'].includes(col.dataType))
-                fields[col.columnName] = el.value !== '' ? parseInt(el.value, 10) : null;
+                fields[col.columnName] = el.value!=='' ? parseInt(el.value,10) : null;
             else if (['decimal','numeric','float','real','money'].includes(col.dataType))
-                fields[col.columnName] = el.value !== '' ? parseFloat(el.value) : null;
+                fields[col.columnName] = el.value!=='' ? parseFloat(el.value) : null;
             else
-                fields[col.columnName] = el.value !== '' ? el.value : null;
+                fields[col.columnName] = el.value!=='' ? el.value : null;
         });
-
         const btn = document.getElementById('saveBtn');
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Saving…';
         try {
             if (this.editMode) {
-                await this.apiPut(
-                    `/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`,
-                    fields);
+                await this.apiPut(`/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`, fields);
                 this.showToast('Record updated successfully.', 'success');
             } else {
                 await this.apiPost(`/records/${enc(this.currentTable)}`, fields);
@@ -1044,10 +1005,8 @@ const app = {
         }
     },
 
-    // ── Soft delete ───────────────────────────────────────────────────────
-
     confirmDelete(id, idColumn) {
-        this.editId = id; this.editIdColumn = idColumn;
+        this.editId=id; this.editIdColumn=idColumn;
         const m = new bootstrap.Modal(document.getElementById('deleteModal'));
         document.getElementById('confirmDeleteBtn').onclick = () => { m.hide(); this.softDelete(); };
         m.show();
@@ -1055,70 +1014,184 @@ const app = {
 
     async softDelete() {
         try {
-            await this.apiDelete(
-                `/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`);
+            await this.apiDelete(`/records/${enc(this.currentTable)}/${enc(this.editIdColumn)}/${enc(this.editId)}`);
             this.showToast('Record deactivated.', 'warning');
             await this.loadRecords();
-        } catch (err) {
-            this.showToast('Deactivate failed: ' + err.message, 'danger');
+        } catch (err) { this.showToast('Deactivate failed: '+err.message, 'danger'); }
+    },
+
+    search()      { this.currentPage=1; this.loadRecords(); },
+    clearSearch() { document.getElementById('searchInput').value=''; this.currentPage=1; this.loadRecords(); },
+
+    // ── Admin: User management ─────────────────────────────────────────────
+
+    openAddUserModal() {
+        document.getElementById('newWinUser').value    = '';
+        document.getElementById('newDisplayName').value= '';
+        document.getElementById('newDept').value       = '';
+        document.getElementById('addUserError').style.display = 'none';
+        new bootstrap.Modal(document.getElementById('addUserModal')).show();
+    },
+
+    addUser() {
+        const winUser  = document.getElementById('newWinUser').value.trim();
+        const dispName = document.getElementById('newDisplayName').value.trim();
+        const dept     = document.getElementById('newDept').value.trim();
+        const errEl    = document.getElementById('addUserError');
+
+        // Validation
+        if (!winUser || !dispName) {
+            errEl.textContent = 'Windows Username and Display Name are required.';
+            errEl.style.display = ''; return;
         }
+        // Duplicate check (case-insensitive)
+        const duplicate = DEMO_DB.users.find(u =>
+            u.winUser.toLowerCase() === winUser.toLowerCase());
+        if (duplicate) {
+            errEl.textContent = `Windows username "${winUser}" is already authorised.`;
+            errEl.style.display = ''; return;
+        }
+
+        // Generate a stable ID from winUser
+        const id    = winUser.toLowerCase().replace(/[^a-z0-9]/g, '.');
+        const av    = dispName.charAt(0).toUpperCase();
+        const color = AVATAR_COLORS[(DEMO_DB.users.length - 1) % AVATAR_COLORS.length];
+
+        const newUser = { id, winUser, name:dispName, dept:dept||'—', role:'user', color, av };
+        DEMO_DB.users.push(newUser);
+
+        // Default: no access to any table
+        DEMO_DB.permissions[id] = {};
+        DEMO_DB.getTables().forEach(t => { DEMO_DB.permissions[id][t] = 'none'; });
+
+        bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
+        this.showToast(`${dispName} added. Set their table permissions below.`, 'success');
+        this.renderLoginScreen();   // login screen refreshes
+        this.renderAdminTab();      // refresh admin view
     },
 
-    // ── Search ────────────────────────────────────────────────────────────
-
-    search()      { this.currentPage = 1; this.loadRecords(); },
-    clearSearch() {
-        document.getElementById('searchInput').value = '';
-        this.currentPage = 1; this.loadRecords();
+    confirmRemoveUser(id) {
+        const user = DEMO_DB.users.find(u => u.id === id);
+        if (!user) return;
+        document.getElementById('removeUserName').textContent = `${user.name} (${user.winUser})`;
+        const m = new bootstrap.Modal(document.getElementById('removeUserModal'));
+        document.getElementById('confirmRemoveBtn').onclick = () => { m.hide(); this.removeUser(id); };
+        m.show();
     },
 
-    // ── Admin: permission matrix ──────────────────────────────────────────
+    removeUser(id) {
+        const idx = DEMO_DB.users.findIndex(u => u.id === id);
+        if (idx === -1) return;
+        const name = DEMO_DB.users[idx].name;
+        DEMO_DB.users.splice(idx, 1);
+        delete DEMO_DB.permissions[id];
+        this.showToast(`${name} has been removed.`, 'warning');
+        this.renderLoginScreen();
+        this.renderAdminTab();
+        // If logged-in user's table dropdown had this user...nothing to do.
+    },
+
+    // ── Admin: render full admin tab ──────────────────────────────────────
 
     renderAdminTab() {
-        const tables   = DEMO_DB.getTables();
-        const nonAdmins = USERS.filter(u => u.role !== 'admin');
+        this.renderUserMgmtTable();
+        this.renderPermMatrix();
+    },
 
-        // Build header columns
-        const thead = document.querySelector('#permMatrix thead tr');
-        thead.innerHTML = '<th class="ps-3" style="background:#f8f9fa">User</th>';
+    renderUserMgmtTable() {
+        const tbody = document.getElementById('userMgmtBody');
+        tbody.innerHTML = '';
+        const tables = DEMO_DB.getTables();
+
+        DEMO_DB.users.forEach(u => {
+            const tr = document.createElement('tr');
+            const accessCount = u.role === 'admin'
+                ? tables.length
+                : tables.filter(t => (DEMO_DB.permissions[u.id]?.[t] || 'none') !== 'none').length;
+            const editCount = u.role === 'admin'
+                ? tables.length
+                : tables.filter(t => DEMO_DB.permissions[u.id]?.[t] === 'edit').length;
+
+            tr.innerHTML = `
+                <td class="ps-3">
+                  <div class="av user-row-av" style="background:${u.color}">${u.av}</div>
+                </td>
+                <td>
+                  <code style="font-size:.78rem;color:#495057">${escHtml(u.winUser)}</code>
+                </td>
+                <td><strong style="font-size:.82rem">${escHtml(u.name)}</strong></td>
+                <td><span class="text-muted">${escHtml(u.dept)}</span></td>
+                <td>${u.role === 'admin'
+                    ? '<span class="badge bg-warning text-dark">Admin</span>'
+                    : '<span class="badge bg-secondary">User</span>'}</td>
+                <td>
+                  ${u.role === 'admin'
+                    ? `<span class="badge bg-success">All ${tables.length} tables</span>`
+                    : accessCount === 0
+                        ? '<span class="text-muted small">No access yet</span>'
+                        : `<span class="badge bg-primary me-1">${editCount} edit</span>
+                           <span class="badge" style="background:#0c63a0">${accessCount - editCount} view</span>`}
+                </td>
+                <td class="text-center">
+                  ${u.role === 'admin'
+                    ? '<span class="text-muted small">—</span>'
+                    : `<button class="btn btn-sm btn-outline-danger btn-action"
+                          onclick="app.confirmRemoveUser('${escJs(u.id)}')"
+                          title="Remove user">
+                         <i class="bi bi-person-x-fill"></i>
+                       </button>`}
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    },
+
+    renderPermMatrix() {
+        const tables    = DEMO_DB.getTables();
+        const nonAdmins = DEMO_DB.users.filter(u => u.role !== 'admin');
+
+        // Header
+        const head = document.getElementById('permMatrixHead');
+        head.innerHTML = '<th class="ps-3 py-2" style="background:#f8f9fa;min-width:160px">User</th>';
         tables.forEach(t => {
             const th = document.createElement('th');
             th.textContent = t;
-            th.style.cssText = 'text-align:center; background:#f8f9fa; padding:10px 8px;';
-            thead.appendChild(th);
+            th.style.cssText = 'text-align:center;background:#f8f9fa;padding:10px 8px;font-size:.75rem;';
+            head.appendChild(th);
         });
 
-        // Build body rows
+        // Rows
         const tbody = document.getElementById('permMatrixBody');
         tbody.innerHTML = '';
+
+        if (nonAdmins.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="${tables.length+1}" class="text-center text-muted py-4 small">
+                No non-admin users yet. Add users above to configure their permissions.</td></tr>`;
+            return;
+        }
+
         nonAdmins.forEach(user => {
             const tr = document.createElement('tr');
-            // User cell
-            tr.innerHTML = `<td class="ps-3 py-3">
+            tr.innerHTML = `<td class="ps-3 py-2">
                 <div class="d-flex align-items-center gap-2">
-                  <div class="user-avatar" style="background:${user.color};width:32px;height:32px;font-size:.75rem">
-                    ${user.av}
-                  </div>
+                  <div class="av" style="background:${user.color};width:30px;height:30px;font-size:.72rem">${user.av}</div>
                   <div>
-                    <div style="font-weight:600;font-size:.82rem">${user.name}</div>
-                    <div style="font-size:.72rem;color:#6c757d">${user.dept}</div>
+                    <div style="font-weight:600;font-size:.8rem">${escHtml(user.name)}</div>
+                    <div style="font-size:.7rem;color:#6c757d">${escHtml(user.dept)}</div>
                   </div>
-                </div>
-            </td>`;
-            // Permission cells
+                </div></td>`;
+
             tables.forEach(tbl => {
                 const perm = DEMO_DB.permissions[user.id]?.[tbl] ?? 'none';
-                const td = document.createElement('td');
-                td.style.textAlign = 'center';
-                td.style.padding   = '8px';
+                const td   = document.createElement('td');
+                td.style.cssText = 'text-align:center;padding:8px;';
                 const sel = document.createElement('select');
                 sel.className = `form-select form-select-sm perm-select perm-${perm}`;
                 sel.dataset.user  = user.id;
                 sel.dataset.table = tbl;
                 sel.innerHTML = `
-                    <option value="none"  ${perm==='none' ?'selected':''}>No Access</option>
-                    <option value="view"  ${perm==='view' ?'selected':''}>View Only</option>
-                    <option value="edit"  ${perm==='edit' ?'selected':''}>Edit</option>`;
+                    <option value="none" ${perm==='none'?'selected':''}>No Access</option>
+                    <option value="view" ${perm==='view'?'selected':''}>View Only</option>
+                    <option value="edit" ${perm==='edit'?'selected':''}>Edit</option>`;
                 sel.addEventListener('change', e => {
                     sel.className = `form-select form-select-sm perm-select perm-${e.target.value}`;
                 });
@@ -1130,99 +1203,82 @@ const app = {
     },
 
     savePermissions() {
-        const selects = document.querySelectorAll('.perm-select');
-        selects.forEach(sel => {
-            const uid = sel.dataset.user;
-            const tbl = sel.dataset.table;
+        document.querySelectorAll('.perm-select').forEach(sel => {
+            const uid = sel.dataset.user, tbl = sel.dataset.table;
             if (!DEMO_DB.permissions[uid]) DEMO_DB.permissions[uid] = {};
             DEMO_DB.permissions[uid][tbl] = sel.value;
         });
-        // Rebuild dropdown for data tab in case current table lost access
+        this.renderUserMgmtTable(); // refresh access count column
         this.populateTableDropdown();
         this.showToast('Permissions saved successfully.', 'success');
     },
 
-    // ── UI helpers ────────────────────────────────────────────────────────
+    // ── Helpers ───────────────────────────────────────────────────────────
 
     showLoading() {
-        document.getElementById('tableContainer').innerHTML = `
-            <div class="state-box">
-                <div class="spinner-border text-primary"></div>
-                <p class="mt-3 mb-0 text-muted small">Loading…</p></div>`;
+        document.getElementById('tableContainer').innerHTML =
+            `<div class="state-box"><div class="spinner-border text-primary"></div>
+             <p class="mt-3 mb-0 text-muted small">Loading…</p></div>`;
     },
 
-    showToast(message, type = 'success') {
+    showToast(msg, type='success') {
         const t = document.getElementById('toast');
         t.className = `toast align-items-center text-white border-0 bg-${type}`;
-        document.getElementById('toastMessage').textContent = message;
-        new bootstrap.Toast(t, { delay: 4000 }).show();
+        document.getElementById('toastMessage').textContent = msg;
+        new bootstrap.Toast(t, {delay:4000}).show();
     },
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  DEMO API LAYER  (routes to DEMO_DB — same interface as production)
-    // ════════════════════════════════════════════════════════════════════════
+    // ── Demo API layer (routes path strings → DEMO_DB) ────────────────────
 
     async apiGet(path) {
         if (path === '/tables') return DEMO_DB.getTables();
-
         const colM = path.match(/^\/columns\/(.+)$/);
         if (colM) return DEMO_DB.getColumns(decodeURIComponent(colM[1]));
-
-        const singleM = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/?]+)\/single/);
-        if (singleM) {
-            const [,tbl,idC,id] = singleM.map(x => decodeURIComponent(x));
+        const singM = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/?]+)\/single/);
+        if (singM) {
+            const [,tbl,idC,id] = singM.map(x => decodeURIComponent(x));
             const r = DEMO_DB.getRecordById(tbl, idC, id);
             if (!r) throw new Error('Record not found.');
             return r;
         }
         const recM = path.match(/^\/records\/([^/?]+)/);
         if (recM) {
-            const tbl  = decodeURIComponent(recM[1]);
-            const qs   = new URLSearchParams(path.split('?')[1] || '');
-            return DEMO_DB.getRecords(
-                tbl,
-                parseInt(qs.get('page') || '1', 10),
-                parseInt(qs.get('pageSize') || '20', 10),
-                qs.get('search') || '',
-                qs.get('showInactive') === 'true'
-            );
+            const tbl = decodeURIComponent(recM[1]);
+            const qs  = new URLSearchParams(path.split('?')[1]||'');
+            return DEMO_DB.getRecords(tbl,
+                parseInt(qs.get('page')||'1',10), parseInt(qs.get('pageSize')||'20',10),
+                qs.get('search')||'', qs.get('showInactive')==='true');
         }
-        throw new Error('Unknown path: ' + path);
+        throw new Error('Unknown path: '+path);
     },
-
     async apiPost(path, body) {
         const m = path.match(/^\/records\/([^/]+)$/);
         if (m) {
             const id = DEMO_DB.insertRecord(decodeURIComponent(m[1]), body, this.currentUser.name);
-            return { id, message: 'Record created.' };
+            return {id, message:'Record created.'};
         }
-        throw new Error('Unknown path: ' + path);
+        throw new Error('Unknown path: '+path);
     },
-
     async apiPut(path, body) {
         const m = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/]+)$/);
         if (m) {
             const [,tbl,idC,id] = m.map(x => decodeURIComponent(x));
-            if (!DEMO_DB.updateRecord(tbl, idC, id, body, this.currentUser.name))
-                throw new Error('Record not found.');
-            return { message: 'Record updated.' };
+            if (!DEMO_DB.updateRecord(tbl,idC,id,body,this.currentUser.name)) throw new Error('Record not found.');
+            return {message:'Record updated.'};
         }
-        throw new Error('Unknown path: ' + path);
+        throw new Error('Unknown path: '+path);
     },
-
     async apiDelete(path) {
         const m = path.match(/^\/records\/([^/]+)\/([^/]+)\/([^/]+)$/);
         if (m) {
             const [,tbl,idC,id] = m.map(x => decodeURIComponent(x));
-            if (!DEMO_DB.softDelete(tbl, idC, id, this.currentUser.name))
-                throw new Error('Record not found.');
-            return { message: 'Record deactivated.' };
+            if (!DEMO_DB.softDelete(tbl,idC,id,this.currentUser.name)) throw new Error('Record not found.');
+            return {message:'Record deactivated.'};
         }
-        throw new Error('Unknown path: ' + path);
+        throw new Error('Unknown path: '+path);
     }
 };
 
-// ── Utilities ────────────────────────────────────────────────────────────────
 function enc(v)    { return encodeURIComponent(v); }
 function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function escJs(s)  { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
